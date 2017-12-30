@@ -1,0 +1,91 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Scenes/Player.gd" type="Script" id=1]
+[ext_resource path="res://Assets/Space shooter assets (300 assets)/PNG/Effects/fire13.png" type="Texture" id=2]
+[ext_resource path="res://Assets/Space shooter assets (300 assets)/PNG/playerShip2_red.png" type="Texture" id=3]
+
+[sub_resource type="ShaderMaterial" id=1]
+
+render_priority = 0
+
+[node name="Player" type="KinematicBody2D"]
+
+position = Vector2( 956.92, 579.506 )
+input_pickable = false
+collision_layer = 1
+collision_mask = 1
+collision/safe_margin = 0.08
+script = ExtResource( 1 )
+SPEED = 400
+DETERIORATION = -0.05
+
+[node name="SpriteEngineFL" type="Sprite" parent="." index="0" groups=[
+"Thrusters",
+]]
+
+visible = false
+position = Vector2( 27.4378, -45.8394 )
+rotation = -0.244346
+texture = ExtResource( 2 )
+flip_h = true
+_sections_unfolded = [ "Animation", "Offset", "Transform", "Visibility" ]
+
+[node name="SpriteThrusterFR" type="Sprite" parent="." index="1" groups=[
+"Thrusters",
+]]
+
+visible = false
+material = SubResource( 1 )
+position = Vector2( -26.9326, -45.1401 )
+rotation = 0.244346
+texture = ExtResource( 2 )
+_sections_unfolded = [ "Animation", "Material", "Offset", "Transform", "Visibility" ]
+
+[node name="SpriteThrusterRL" type="Sprite" parent="." index="2" groups=[
+"Thrusters",
+]]
+
+visible = false
+position = Vector2( 53.8155, 3.27927 )
+rotation = 6.03884
+scale = Vector2( 1, 0.5 )
+texture = ExtResource( 2 )
+flip_h = true
+flip_v = true
+_sections_unfolded = [ "Animation", "Offset", "Transform", "Visibility" ]
+
+[node name="SpriteThrusterRR" type="Sprite" parent="." index="3" groups=[
+"Thrusters",
+]]
+
+visible = false
+material = SubResource( 1 )
+position = Vector2( -52.555, 3.97851 )
+rotation = 0.244346
+scale = Vector2( 1, 0.5 )
+texture = ExtResource( 2 )
+flip_v = true
+_sections_unfolded = [ "Animation", "Material", "Offset", "Transform", "Visibility" ]
+
+[node name="SpriteShip" type="Sprite" parent="." index="4"]
+
+rotation = 3.14159
+texture = ExtResource( 3 )
+_sections_unfolded = [ "Animation", "Transform", "Z" ]
+
+[node name="TimerBulletTimeout" type="Timer" parent="." index="5"]
+
+process_mode = 1
+wait_time = 0.25
+one_shot = false
+autostart = false
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." index="6"]
+
+position = Vector2( 0.174805, 0.174866 )
+build_mode = 0
+polygon = PoolVector2Array( -35.2607, -30.4686, -49.5682, -8.56946, -9.56561, 9.53387, 0.0700073, 30.5571, 10.8736, 9.82587, 48.8322, -7.69348, 35.9847, -29.5927, 12.9175, -22.5849, 8.24567, -32.5125, -8.68964, -32.5125, -12.1935, -20.249 )
+
+[connection signal="timeout" from="TimerBulletTimeout" to="." method="_on_Timer_timeout"]
+
+
