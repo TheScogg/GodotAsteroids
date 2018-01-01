@@ -20,6 +20,7 @@ bulletSpeed = 800
 
 [node name="Sprite" type="Sprite" parent="." index="0"]
 
+scale = Vector2( 1, 0.5 )
 texture = ExtResource( 2 )
 _sections_unfolded = [ "Transform" ]
 
@@ -32,8 +33,9 @@ autostart = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." index="2"]
 
-position = Vector2( 0.0510464, 21.8481 )
+position = Vector2( 0.170546, 12.1948 )
 shape = SubResource( 1 )
+_sections_unfolded = [ "Z" ]
 
 [connection signal="timeout" from="TimerKill" to="." method="_on_TimerKill_timeout"]
 

@@ -9,21 +9,17 @@ var rotateBoost
 var direction
 var velocity
 var canShoot = true
+var lives = 3
 
 var engineSprites = []
 var bullet
-var bullets 
+onready var bullets = preload("res://Scenes/Bullet.tscn")
 
 func _ready():
 	screensize = get_viewport().get_visible_rect().size
 	position = screensize / 2
-	
 	motion = Vector2(0,0)
 
-	bullets = load("res://Scenes/Bullet.tscn")
-
-
-	
 	#Forward is 1, Backwards is -1
 	direction = 1
 	set_physics_process(true)
@@ -31,20 +27,26 @@ func _ready():
 	engineSprites = get_tree().get_nodes_in_group("Thrusters")
 
 func _physics_process(delta):
-	
-	#Default rotation speed, unless rotate boost is engaged with "ui_shift"
-	rotateBoost = 2
-	SPEED = 400
 
-
-	###############################################################################
-	#Instance bullet scene upon Space Bar press
+		#Instance bullet scene upon Space Bar press
 	if (Input.is_action_pressed("ui_select")):
 		if (canShoot == true):
 			bullet = bullets.instance()
-			get_tree().get_root().add_child(bullet)
+			bullet.position = self.position
+			bullet.rotation = self.rotation
+			get_parent().add_child(bullet)
+#			self.add_child(bullet)
 			$TimerBulletTimeout.start()
 		canShoot = false
+	
+	###############################################################################
+	##PLAYER MOVEMENT CODE
+	###############################################################################
+	#Default rotation speed, unless rotate boost is engaged with "ui_shift"
+	rotateBoost = 2
+	SPEED = 400
+	
+
 	
 	#Hold shift for tighter turns, deteriorates after use
 	if (Input.is_action_pressed("ui_shift")):
@@ -76,37 +78,28 @@ func _physics_process(delta):
 		else:
 			direction = -1
 			motion = Vector2(-sin(rotation), cos(rotation)) * SPEED * delta * direction
-
-
-
-		
 		
 	if (Input.is_action_pressed("ui_right")):
 		self.rotate(delta * rotateBoost * direction)
 	if (Input.is_action_pressed("ui_left")):
 		self.rotate(-delta * rotateBoost * direction)
-	
-
+	#########################################################################################
 		
-
+	#Wraps character around when they reach edges of screen
+	if (position.y <= 0):
+		position.y = screensize.y - 1
+	if (position.y >= screensize.y):
+		position.y = 0
+	if (position.x <= 0):
+		position.x = screensize.x - 1
+	if (position.x >= screensize.x):
+		position.x = 0
 
 	position = position + motion
 
 
-	#Wraps character around when they reach edges of screen
-	if (position.y <= 0):
-		position.y = screensize.y - 1
-#		position.x = screensize.x - position.x
-	if (position.y >= screensize.y):
-		position.y = 0
-#		position.x = screensize.x - position.x
-		
-	if (position.x <= 0):
-		position.x = screensize.x - 1
-#		position.y = screensize.y - position.y
-	if (position.x >= screensize.x):
-		position.x = 0
-#		position.y = screensize.y - position.y
+
+
 	
 
 
@@ -115,4 +108,3 @@ func _physics_process(delta):
 func _on_Timer_timeout():
 	canShoot = true
 	$TimerBulletTimeout.start()
-	print ("Bullet Timeout")

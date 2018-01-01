@@ -1,15 +1,21 @@
 extends KinematicBody2D
 
 var motion
+var playerPos
+var playerRot
 
 export var bulletSpeed = 800
-onready var player = get_tree().get_current_scene().get_node("Player")
+#onready var player = get_parent()
+
+
 
 func _ready():
-	position = player.position 
-	rotation = player.rotation
+
 	motion = Vector2(-sin(rotation), cos(rotation)) 
 	set_physics_process(true)
+	
+	
+	
 
 	
 func _physics_process(delta):
