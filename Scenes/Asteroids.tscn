@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Scenes/Asteroids.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Space shooter assets (300 assets)/PNG/Meteors/meteorGrey_big1.png" type="Texture" id=2]
@@ -8,6 +8,25 @@
 [ext_resource path="res://Assets/Space shooter assets (300 assets)/PNG/Meteors/meteorGrey_med2.png" type="Texture" id=6]
 [ext_resource path="res://Assets/Space shooter assets (300 assets)/PNG/Meteors/meteorGrey_tiny1.png" type="Texture" id=7]
 [ext_resource path="res://Assets/Space shooter assets (300 assets)/PNG/Meteors/meteorGrey_tiny2.png" type="Texture" id=8]
+
+[sub_resource type="Animation" id=1]
+
+resource_name = "explosion"
+length = 1.0
+loop = false
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
 
 [node name="Asteroids" type="Node2D" index="0"]
 
@@ -23,15 +42,28 @@ linear_damp = 0.1
 angular_damp = 1.0
 audio_bus_override = false
 audio_bus_name = "Master"
+_sections_unfolded = [ "Collision" ]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Big1" index="0"]
 
 build_mode = 0
-polygon = PoolVector2Array( 31.8654, 27.2316, 44.6845, -1.09243, 20.9997, -36.2534, -29.2999, -37.7184, -46.0258, 7.57571, -20.5097, 36.6323, 10.3782, 24.0574 )
+polygon = PoolVector2Array( 31.8654, 27.2316, 44.6845, -1.09243, 21.7259, -38.1151, -29.2999, -37.7184, -46.0258, 7.57571, -20.5097, 36.6323, 10.3782, 24.0574 )
 
 [node name="Sprite" type="Sprite" parent="Big1" index="1"]
 
 texture = ExtResource( 2 )
+_sections_unfolded = [ "Animation" ]
+
+[node name="Animations" type="AnimationPlayer" parent="Big1" index="2"]
+
+playback_process_mode = 1
+playback_default_blend_time = 0.0
+root_node = NodePath("..")
+anims/explosion = SubResource( 1 )
+playback/active = true
+playback/speed = 1.0
+blend_times = [  ]
+autoplay = ""
 
 [node name="Big2" type="Area2D" parent="." index="1"]
 
@@ -51,6 +83,7 @@ polygon = PoolVector2Array( 42.769, 15.2184, 54.727, -26.6346, 7.72536, -44.5716
 
 [node name="Sprite" type="Sprite" parent="Big2" index="1"]
 
+position = Vector2( 0, -7.15256e-07 )
 texture = ExtResource( 3 )
 
 [node name="Big3" type="Area2D" parent="." index="2"]
@@ -164,5 +197,7 @@ polygon = PoolVector2Array( -0.211292, -6.40944, -6.64321, 0.46048, 1.89182, 6.3
 [node name="Sprite" type="Sprite" parent="Small2" index="1"]
 
 texture = ExtResource( 8 )
+
+[connection signal="body_entered" from="Big1" to="." method="_on_Big1_body_entered"]
 
 

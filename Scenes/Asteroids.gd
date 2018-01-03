@@ -8,9 +8,6 @@ var asteroids
 signal body_entered
 
 func _ready():
-
-
-	
 	set_physics_process(true)
 	
 
@@ -44,5 +41,8 @@ func spawnAsteroid(size):
 
 
 	return randomAsteroid.duplicate()
+
+
+
 
 

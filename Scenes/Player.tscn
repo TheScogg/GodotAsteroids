@@ -27,7 +27,6 @@ DETERIORATION = -0.05
 visible = false
 position = Vector2( 27.4378, -45.8394 )
 rotation = -0.244346
-scale = Vector2( 1, 1 )
 texture = ExtResource( 2 )
 flip_h = true
 _sections_unfolded = [ "Animation", "Offset", "Transform", "Visibility" ]
@@ -40,7 +39,6 @@ visible = false
 material = SubResource( 1 )
 position = Vector2( -26.9326, -45.1401 )
 rotation = 0.244346
-scale = Vector2( 1, 1 )
 texture = ExtResource( 2 )
 _sections_unfolded = [ "Animation", "Material", "Offset", "Transform", "Visibility", "Z" ]
 
