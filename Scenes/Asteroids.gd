@@ -37,7 +37,10 @@ func spawnAsteroid(size):
 		randomAsteroid = small[randi() % small.size()]
 		
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> cdd88ae2fadaeab1595e880d7159ced0e9802cf7
 	print (randomAsteroid)
 
 

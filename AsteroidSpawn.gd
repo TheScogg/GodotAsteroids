@@ -57,7 +57,10 @@ func _on_TimerAsteroid_timeout():
 		
 		$Path2D.add_child(asteroidFollowPath)
 		asteroidDictionary[asteroidDictionary.size()] = asteroidFollowPath
+<<<<<<< HEAD
 #		asteroidDictionary[asteroidFollowPath.get_name()] = asteroidFollowPath
+=======
+>>>>>>> cdd88ae2fadaeab1595e880d7159ced0e9802cf7
 		
 		set_pos_and_trajectory(asteroidDictionary)
 		
@@ -70,8 +73,18 @@ func _body_entered( body, asteroid ):
 	#Change name of keys to AsteroidPaths?
 	lives -= 1
 	
+<<<<<<< HEAD
 	if body.get_name().match("Bullet"):
 		asteroid.get_node("ExplodeBigAnim").play("explosion")
 
 #	get_parent().get_node("CanvasLayer/Control/RichTextLabel").set_text(str(lives))
+=======
+	if body.get_name() == "Player":
+		get_parent().get_node("CanvasLayer/Control/RichTextLabel").set_text(str(lives))
+	elif body.get_name().match("Bullet"):
+		print (asteroid.get_parent().get_name())
+		body.queue_free()
+		
+	get_parent().get_node("CanvasLayer/Control/RichTextLabel").set_text(str(lives))
+>>>>>>> cdd88ae2fadaeab1595e880d7159ced0e9802cf7
 		

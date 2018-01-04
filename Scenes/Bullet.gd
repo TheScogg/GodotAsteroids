@@ -20,4 +20,9 @@ func _physics_process(delta):
 		queue_free()
 	
 
+<<<<<<< HEAD
 
+=======
+func _on_TimerKill_timeout():
+	queue_free()
+>>>>>>> cdd88ae2fadaeab1595e880d7159ced0e9802cf7
