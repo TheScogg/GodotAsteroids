@@ -1,0 +1,304 @@
+[gd_scene load_steps=18 format=2]
+
+[ext_resource path="res://Scenes/Asteroids.gd" type="Script" id=1]
+[ext_resource path="res://Assets/Space shooter assets (300 assets)/PNG/Meteors/meteorGrey_big1.png" type="Texture" id=2]
+[ext_resource path="res://Assets/Explosion pack (60 assets)/PNG/Regular explosion/regularExplosion00.png" type="Texture" id=3]
+[ext_resource path="res://Assets/Explosion pack (60 assets)/PNG/Pixel explosion/pixelExplosion01.png" type="Texture" id=4]
+[ext_resource path="res://Assets/Explosion pack (60 assets)/PNG/Pixel explosion/pixelExplosion02.png" type="Texture" id=5]
+[ext_resource path="res://Assets/Explosion pack (60 assets)/PNG/Pixel explosion/pixelExplosion03.png" type="Texture" id=6]
+[ext_resource path="res://Assets/Explosion pack (60 assets)/PNG/Pixel explosion/pixelExplosion04.png" type="Texture" id=7]
+[ext_resource path="res://Assets/Explosion pack (60 assets)/PNG/Pixel explosion/pixelExplosion05.png" type="Texture" id=8]
+[ext_resource path="res://Assets/Explosion pack (60 assets)/PNG/Pixel explosion/pixelExplosion06.png" type="Texture" id=9]
+[ext_resource path="res://Assets/Space shooter assets (300 assets)/PNG/Meteors/meteorGrey_big3.png" type="Texture" id=10]
+[ext_resource path="res://Assets/Space shooter assets (300 assets)/PNG/Meteors/meteorGrey_big2.png" type="Texture" id=11]
+[ext_resource path="res://Assets/Space shooter assets (300 assets)/PNG/Meteors/meteorGrey_med1.png" type="Texture" id=12]
+[ext_resource path="res://Assets/Space shooter assets (300 assets)/PNG/Meteors/meteorGrey_med2.png" type="Texture" id=13]
+[ext_resource path="res://Assets/Space shooter assets (300 assets)/PNG/Meteors/meteorGrey_tiny1.png" type="Texture" id=14]
+[ext_resource path="res://Assets/Space shooter assets (300 assets)/PNG/Meteors/meteorGrey_tiny2.png" type="Texture" id=15]
+
+[sub_resource type="Animation" id=1]
+
+resource_name = "explosion"
+length = 1.2
+loop = false
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:texture")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ ExtResource( 2 ), ExtResource( 3 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 9 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 10 ) ]
+}
+
+[sub_resource type="Animation" id=2]
+
+resource_name = "explosion"
+length = 1.2
+loop = false
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:texture")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ ExtResource( 11 ), ExtResource( 3 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 9 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 10 ) ]
+}
+
+[node name="Asteroids" type="Node2D"]
+
+script = ExtResource( 1 )
+_sections_unfolded = [ "Z" ]
+
+[node name="Big1" type="Area2D" parent="." index="0"]
+
+input_pickable = true
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+collision_layer = 2
+audio_bus_override = false
+audio_bus_name = "Master"
+_sections_unfolded = [ "Collision" ]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Big1" index="0"]
+
+build_mode = 0
+polygon = PoolVector2Array( -33.4525, -41.8797, 22.8257, -41.6758, 49.9453, -1.09841, 34.0406, 32.7501, 9.77572, 28.8758, -22.0337, 41.3141, -51.1923, 10.5243 )
+
+[node name="Sprite" type="Sprite" parent="Big1" index="1"]
+
+texture = ExtResource( 2 )
+_sections_unfolded = [ "Animation" ]
+
+[node name="ExplodeBigAnim" type="AnimationPlayer" parent="Big1" index="2"]
+
+playback_process_mode = 1
+playback_default_blend_time = 0.0
+root_node = NodePath("..")
+anims/explosion = SubResource( 1 )
+playback/active = true
+playback/speed = 1.0
+blend_times = [  ]
+autoplay = ""
+
+[node name="Big2" type="Area2D" parent="." index="1"]
+
+position = Vector2( 162.617, -3.36543 )
+input_pickable = true
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+audio_bus_override = false
+audio_bus_name = "Master"
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Big2" index="0"]
+
+build_mode = 0
+polygon = PoolVector2Array( 48.0816, 20.6337, 62.3512, -30.6868, 5.52324, -51.7156, -42.2924, -42.9536, -63.3213, -3.14897, -58.0641, 29.3957, -25.5194, 51.9266, -3.23882, 35.404 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="Sprite" type="Sprite" parent="Big2" index="1"]
+
+position = Vector2( 0, -7.15256e-07 )
+texture = ExtResource( 11 )
+
+[node name="ExplodeBigAnim" type="AnimationPlayer" parent="Big2" index="2"]
+
+playback_process_mode = 1
+playback_default_blend_time = 0.0
+root_node = NodePath("..")
+anims/explosion = SubResource( 2 )
+playback/active = true
+playback/speed = 1.0
+blend_times = [  ]
+autoplay = ""
+_sections_unfolded = [ "Playback Options", "playback" ]
+
+[node name="Big3" type="Area2D" parent="." index="2"]
+
+position = Vector2( 324.117, -4.48205 )
+input_pickable = true
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+audio_bus_override = false
+audio_bus_name = "Master"
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Big3" index="0"]
+
+build_mode = 0
+polygon = PoolVector2Array( 21.7937, 42.2649, 46.6896, 2.9233, 31.9365, -29.9638, -11.0934, -41.9507, -46.132, -19.2064, -44.2879, 17.0617, -28.6127, 34.2737 )
+
+[node name="Sprite" type="Sprite" parent="Big3" index="1"]
+
+texture = ExtResource( 10 )
+
+[node name="ExplodeBigAnim" type="AnimationPlayer" parent="Big3" index="2"]
+
+playback_process_mode = 1
+playback_default_blend_time = 0.0
+root_node = NodePath("..")
+anims/explosion = SubResource( 1 )
+playback/active = true
+playback/speed = 1.0
+blend_times = [  ]
+autoplay = ""
+
+[node name="Medium1" type="Area2D" parent="." index="3"]
+
+editor/display_folded = true
+position = Vector2( 1.4505, 123.192 )
+input_pickable = true
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+audio_bus_override = false
+audio_bus_name = "Master"
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Medium1" index="0"]
+
+build_mode = 0
+polygon = PoolVector2Array( 17.9377, 6.20113, 15.2933, -16.9373, -7.95536, -17.7086, -18.8635, -3.82551, -12.8034, 13.2529, -1.01382, 17.6602 )
+
+[node name="Sprite" type="Sprite" parent="Medium1" index="1"]
+
+texture = ExtResource( 12 )
+
+[node name="Medium2" type="Area2D" parent="." index="4"]
+
+editor/display_folded = true
+position = Vector2( 62.411, 123.873 )
+input_pickable = true
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+audio_bus_override = false
+audio_bus_name = "Master"
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Medium2" index="0"]
+
+build_mode = 0
+polygon = PoolVector2Array( 7.73706, -17.1945, -14.1164, -13.4098, -19.7324, 4.29278, -7.64584, 15.7689, 6.14994, 16.9898, 20.312, -2.42198 )
+
+[node name="Sprite" type="Sprite" parent="Medium2" index="1"]
+
+texture = ExtResource( 13 )
+
+[node name="Small1" type="Area2D" parent="." index="5"]
+
+editor/display_folded = true
+position = Vector2( 5.05327, 191.419 )
+input_pickable = true
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+audio_bus_override = false
+audio_bus_name = "Master"
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Small1" index="0"]
+
+build_mode = 0
+polygon = PoolVector2Array( -1.15203, -7.57928, -6.55099, -0.858109, -2.25386, 6.85469, 5.01822, 6.63432, 6.89133, -4.16362 )
+
+[node name="Sprite" type="Sprite" parent="Small1" index="1"]
+
+texture = ExtResource( 14 )
+
+[node name="Small2" type="Area2D" parent="." index="6"]
+
+editor/display_folded = true
+position = Vector2( 47.4659, 189.788 )
+input_pickable = true
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+audio_bus_override = false
+audio_bus_name = "Master"
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Small2" index="0"]
+
+build_mode = 0
+polygon = PoolVector2Array( -0.211292, -6.40944, -6.64321, 0.46048, 1.89182, 6.32831, 4.26805, 1.96381, 6.43245, -1.65698 )
+
+[node name="Sprite" type="Sprite" parent="Small2" index="1"]
+
+texture = ExtResource( 15 )
+
+

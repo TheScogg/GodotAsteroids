@@ -1,0 +1,26 @@
+[gd_scene load_steps=2 format=2]
+
+[sub_resource type="Curve2D" id=1]
+
+bake_interval = 5.0
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 1977.73, -30.652, 0, 0, 0, 0, 1991.36, 1144.01, 0, 0, 0, 0, -78.4948, 1139.47, 0, 0, 0, 0, -80.7667, -89.726, 0, 0, 0, 0, 748.54, -87.4539, 0, 0, 0, 0, 1977.73, -30.652 )
+}
+
+[node name="Path2D" type="Path2D"]
+
+z = 7
+curve = SubResource( 1 )
+_sections_unfolded = [ "Transform", "Visibility", "Z" ]
+
+[node name="Area2D" type="Area2D" parent="." index="0"]
+
+input_pickable = true
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+audio_bus_override = false
+audio_bus_name = "Master"
+
+
