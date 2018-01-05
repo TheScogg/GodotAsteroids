@@ -1,13 +1,9 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://AsteroidSpawn.gd" type="Script" id=1]
+[ext_resource path="res://Scenes/AsteroidSpawn.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Path2D.tscn" type="PackedScene" id=2]
 
-<<<<<<< HEAD
 [node name="AsteroidSpawn" type="Node2D" index="0"]
-=======
-[node name="AsteroidSpawn" type="Node2D"]
->>>>>>> cdd88ae2fadaeab1595e880d7159ced0e9802cf7
 
 script = ExtResource( 1 )
 

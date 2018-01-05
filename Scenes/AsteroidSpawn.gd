@@ -2,7 +2,11 @@ extends Node2D
 
 var scn_asteroids = preload("res://Scenes/Asteroids.tscn")
 var asteroid
-var totalAsteroids = 5
+
+var scn_explosion = preload("res://Scenes/Explosion.tscn")
+var explosion 
+
+var totalAsteroids = 15
 var asteroidPath2D
 var asteroidFollowPath
 var asteroidDictionary = {}
@@ -18,13 +22,19 @@ func _ready():
 	
 func _physics_process(delta):
 	move_asteroids(delta)
+	contain()
 	
 func collision():
 	for asteroid in asteroidDictionary:
 		asteroid = asteroidDictionary[asteroid].get_child(0)
 		
 func contain():
-	pass
+#	for asteroid in asteroidDictionary:
+#		if (asteroidDictionary[asteroid].position.x < 0):
+	pass	
+			
+			
+	
 	
 func move_asteroids(delta):
 	for asteroid in asteroidDictionary:
@@ -36,7 +46,6 @@ func split_asteroids():
 	pass
 	
 func set_pos_and_trajectory(asteroid):
-	asteroid = asteroid[asteroidDictionary.size() - 1]
 	asteroid.set_unit_offset(randf())
 	asteroid.rotate(rand_range(PI/4, 3 * PI/4))
 
@@ -57,14 +66,12 @@ func _on_TimerAsteroid_timeout():
 		
 		$Path2D.add_child(asteroidFollowPath)
 		asteroidDictionary[asteroidDictionary.size()] = asteroidFollowPath
-<<<<<<< HEAD
 #		asteroidDictionary[asteroidFollowPath.get_name()] = asteroidFollowPath
-=======
->>>>>>> cdd88ae2fadaeab1595e880d7159ced0e9802cf7
 		
-		set_pos_and_trajectory(asteroidDictionary)
+		set_pos_and_trajectory(asteroidDictionary[asteroidDictionary.size() - 1])
 		
 	totalAsteroids -= 1
+	
 
 
 func _body_entered( body, asteroid ):
@@ -72,19 +79,26 @@ func _body_entered( body, asteroid ):
 	#add hits variable to asteroidDictionary, 3 hits to split
 	#Change name of keys to AsteroidPaths?
 	lives -= 1
-	
-<<<<<<< HEAD
+
 	if body.get_name().match("Bullet"):
-		asteroid.get_node("ExplodeBigAnim").play("explosion")
+#		asteroid.get_node("ExplodeBigAnim").play("explosion")
+		print (asteroid.position)
+		explosion = scn_explosion.instance()
+		
+#*******Position is pointing to instantiation position on PathFollow2D. Any way to seperate from that?
+#		var child = get_node("a/node")
+#	    get_node("a").remove_child(child)
+#	    get_node("b").add_child(child)
+
+
+		explosion.position = Vector2(asteroid.position.x, asteroid.position.y)
+
+#*******You need to find a way to remove asteroid from asteroidDictionary, perhaps changing value names to the asteroidPath2D
+#		asteroid.queue_free()
+
+		print (explosion.get_node("AnimationExplosion"))
+		explosion.get_node("AnimationExplosion").play("explode")
+		
 
 #	get_parent().get_node("CanvasLayer/Control/RichTextLabel").set_text(str(lives))
-=======
-	if body.get_name() == "Player":
-		get_parent().get_node("CanvasLayer/Control/RichTextLabel").set_text(str(lives))
-	elif body.get_name().match("Bullet"):
-		print (asteroid.get_parent().get_name())
-		body.queue_free()
-		
-	get_parent().get_node("CanvasLayer/Control/RichTextLabel").set_text(str(lives))
->>>>>>> cdd88ae2fadaeab1595e880d7159ced0e9802cf7
 		
