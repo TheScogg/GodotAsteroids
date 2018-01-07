@@ -4,12 +4,13 @@ extends Area2D
 var scn_explosion = preload("res://Scenes/Explosion.tscn")
 var scn_asteroids = load("res://Scenes/Asteroids.tscn")
 var scn_asteroidSpawn = load("res://Scenes/AsteroidSpawn - Copy.gd")
-
+var vectorHeading = Vector2(0,0)
 var explosion 
 var hits = 0
 var screensize
 var timer
 signal makeMedium
+signal makeSmall
 
 func _ready():
 	screensize = get_viewport().get_visible_rect().size
@@ -27,12 +28,11 @@ func startContainTimer():
 
 
 func _on_timer_timeout():
-	print ("Timer timed out")
 	timer.stop()
 
 
 func unhook():
-	print (get_parent().get_name(), " is parent")
+
 	pass
 
 func _physics_process(delta):
@@ -52,22 +52,32 @@ func contain():
 
 
 func move_asteroids(delta):
-	self.position += Vector2(1,0)
-	self.rotation += 1.5 * delta
+
+	if (self.get_name().find("Big") != -1):
+		self.position += Vector2(1,0)
+		self.rotation += 1.5 * delta
+	else:
+		self.position += vectorHeading
+		self.rotation += 1.5 * delta
 	
 func player_collision():
 	print ("You're Dead...")
 
 func print_hello():
-	print ("Asteroid Instantiated")	
+	pass
 
 func set_pos_and_trajectory():
-	get_parent().set_unit_offset(randf())
-	get_parent().rotate(rand_range(PI/4, 3 * PI/4))
+	randomize()
+	if (self.get_name().find("Big") != -1):
+		get_parent().set_unit_offset(randf())
+		get_parent().rotate(rand_range(PI/4, 3 * PI/4))
+	else:
+		vectorHeading = Vector2(randf() * 2.0 - 1, randf() * 2.0 - 1)
 
+		
+		
 func _body_entered( body ):
-#	asteroid.create("Medium")
-	if (body.get_name() != "Player"):
+	if (body.get_name().find("Bullet") != -1):
 		explosion = scn_explosion.instance()
 	#	if body.get_name().match("Bullet"):
 		body.queue_free()
@@ -76,16 +86,18 @@ func _body_entered( body ):
 		explosion.get_node("AnimationExplosion").play("explode")
 		
 	
-	if (hits == 5):
-		#!!!! Emit signal to be connected to in AsteroidSpawn, just like the timer signal in there
-		emit_signal("makeMedium", self.global_position)
-
-
-		self.queue_free()
-		print ("Asteroid split")
-		
-	
-
+		if (self.get_name().find("Big") != -1 && hits == 5):
+			#!!!! Emit signal to be connected to in AsteroidSpawn, just like the timer signal in there
+			emit_signal("makeMedium", self.global_position)
+			explosion.get_node("AnimationExplosion").play("explode")
+			self.queue_free()
+		elif (self.get_name().find("Medium") != -1 && hits == 5):
+			emit_signal("makeSmall", self.global_position)
+			explosion.get_node("AnimationExplosion").play("explode")
+			self.queue_free()
+		elif (self.get_name().find("Small") != -1 && hits == 5):
+			explosion.get_node("AnimationExplosion").play("explode")
+			self.queue_free()
 
 		
 	hits += 1

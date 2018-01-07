@@ -4,53 +4,69 @@ var scn_asteroids = preload("res://Scenes/Asteroids.tscn")
 var anAsteroidCode = preload("res://Scenes/anAsteroid.gd")
 var asteroid
 
-var scn_explosion = preload("res://Scenes/Explosion.tscn")
+#var scn_explosion = preload("res://Scenes/Explosion.tscn")
 var explosion 
 var hits = 0
-var totalAsteroids = 15
+var totalAsteroids = 5
 var asteroidPath2D
 var asteroidFollowPath
 var asteroidDictionary = {}
 var lives = 5
 
+
 func _ready():
 	#AsteroidSpawn
-	print (self.get_name())
+
 	set_process(true)
 	
 func _process(delta):
 	pass
 
 
-func create(size, asteroidPos):
-	asteroid = scn_asteroids.instance()
-	asteroid = asteroid.spawnAsteroid(size)
+func create(size, asteroidPos, howMany):
 	print (asteroidPos)
-	asteroid.position = asteroidPos
-	asteroid.set_script(anAsteroidCode)
-	asteroid.connect("makeMedium", self, "_make_medium")
-	asteroid.connect("body_entered", asteroid, "_body_entered")
-
+	for i in range(howMany):
+		asteroid = scn_asteroids.instance()
+		asteroid = asteroid.spawnAsteroid(size)
 	
-
-	asteroidFollowPath = PathFollow2D.new()
-	asteroidFollowPath.set_name("AsteroidPath")
-	asteroidFollowPath.add_child(asteroid)
-
-	#Path2D is a child of AsteroidSpawn node
-	$Path2D.add_child(asteroidFollowPath)
-
+		asteroid.global_position = asteroidPos
+		asteroid.set_script(anAsteroidCode)
 		
-	totalAsteroids -= 1
+		#Signal Lists 
+		asteroid.connect("body_entered", asteroid, "_body_entered")
+		asteroid.connect("makeMedium", self, "_make_medium")
+		asteroid.connect("makeSmall", self, "_make_small")
+		
+		if (size == "Big"):
+			asteroidFollowPath = PathFollow2D.new()
+			asteroidFollowPath.set_name("AsteroidPath")
+			asteroidFollowPath.add_child(asteroid)
+		
+			#Path2D is a child of AsteroidSpawn node
+			$Path2D.add_child(asteroidFollowPath)
+
+		elif (size == "Medium" || size == "Small"):
+
+			$Freefloating.add_child(asteroid)
+
+
 	
+func _make_big(asteroidPos):
+	create("Big", asteroidPos, 1)
 
 func _make_medium(asteroidPos):
-	print (asteroidPos)
-	create("Medium", asteroidPos)
+	create("Medium", asteroidPos, 2)
+	
+func _make_small(asteroidPos):
+	create("Small", asteroidPos, 2)
 	
 #Create asteroid path and Area2d / Sprite subnodes every time TimerAsteroid expires
 func _on_TimerAsteroid_timeout():
-	create("Big", Vector2(0,0))
-
+	print ("Total Asteroids Left: ",totalAsteroids)
+	if (totalAsteroids > 0):
+		create("Big", Vector2(0,0), 1)
+		totalAsteroids -= 1
+	else:
+		self.get_node("TimerAsteroid").queue_free()
 	
 	
