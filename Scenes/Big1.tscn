@@ -1,0 +1,31 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Scenes/anAsteroid.gd" type="Script" id=1]
+[ext_resource path="res://Assets/Space shooter assets (300 assets)/PNG/Meteors/meteorGrey_big1.png" type="Texture" id=2]
+
+[node name="Big1" type="Area2D"]
+
+input_pickable = true
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+priority = 4.0
+audio_bus_override = false
+audio_bus_name = "Master"
+script = ExtResource( 1 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." index="0"]
+
+build_mode = 0
+polygon = PoolVector2Array( 48.0816, 20.6337, 62.3512, -30.6868, 5.52324, -51.7156, -42.2924, -42.9536, -63.3213, -3.14897, -58.0641, 29.3957, -25.5194, 51.9266, -3.23882, 35.404 )
+_sections_unfolded = [ "Material", "Transform" ]
+
+[node name="Sprite" type="Sprite" parent="." index="1"]
+
+position = Vector2( 0, -7.15256e-07 )
+texture = ExtResource( 2 )
+_sections_unfolded = [ "Animation", "Material", "Offset", "Transform", "Visibility" ]
+
+

@@ -35,11 +35,6 @@ func spawnAsteroid(size):
 		randomAsteroid = medium[randi() % medium.size()]
 	elif (size == "Small"):
 		randomAsteroid = small[randi() % small.size()]
-		
-
-
-	print (randomAsteroid)
-
 
 	return randomAsteroid.duplicate()
 

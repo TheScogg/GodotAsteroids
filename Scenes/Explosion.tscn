@@ -29,7 +29,17 @@ tracks/0/keys = {
 "values": [ ExtResource( 1 ), ExtResource( 2 ), ExtResource( 3 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 9 ), null ]
 }
 
-[node name="Explosion" type="Node2D"]
+[node name="Explosion" type="Area2D"]
+
+input_pickable = true
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+collision_layer = 2
+audio_bus_override = false
+audio_bus_name = "Master"
+_sections_unfolded = [ "Collision", "Visibility", "Z" ]
 
 [node name="Explosion" type="Sprite" parent="." index="0"]
 

@@ -21,21 +21,22 @@ gravity_vec = Vector2( 0, 1 )
 gravity = 98.0
 linear_damp = 0.1
 angular_damp = 1.0
-collision_layer = 2
+priority = 4.0
 audio_bus_override = false
 audio_bus_name = "Master"
-_sections_unfolded = [ "Collision" ]
+_sections_unfolded = [ "Transform" ]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Big1" index="0"]
 
-build_mode = 1
-polygon = PoolVector2Array( -35.2047, -43.3308, 26.1588, -43.156, 52.5573, -1.37294, 36.2986, 36.3892, 10.2498, 30.0955, -22.9669, 42.508, -51.1923, 10.5243 )
-_sections_unfolded = [ "Transform" ]
+build_mode = 0
+polygon = PoolVector2Array( 32.9615, 35.5937, 51.6488, -0.612915, 25.0778, -43.5353, -35.3639, -42.9513, -40.9117, -23.388, -52.8832, 10.1907, -22.8084, 44.0614, 9.60237, 30.6299 )
+_sections_unfolded = [ "Material", "Transform" ]
 
 [node name="Sprite" type="Sprite" parent="Big1" index="1"]
 
+position = Vector2( 0, -7.15256e-07 )
 texture = ExtResource( 2 )
-_sections_unfolded = [ "Animation", "Visibility" ]
+_sections_unfolded = [ "Animation", "Material", "Offset", "Transform", "Visibility" ]
 
 [node name="Big2" type="Area2D" parent="." index="1"]
 
@@ -45,21 +46,22 @@ gravity_vec = Vector2( 0, 1 )
 gravity = 98.0
 linear_damp = 0.1
 angular_damp = 1.0
+priority = 4.0
 audio_bus_override = false
 audio_bus_name = "Master"
 _sections_unfolded = [ "Transform" ]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Big2" index="0"]
 
-build_mode = 1
+build_mode = 0
 polygon = PoolVector2Array( 48.0816, 20.6337, 62.3512, -30.6868, 5.52324, -51.7156, -42.2924, -42.9536, -63.3213, -3.14897, -58.0641, 29.3957, -25.5194, 51.9266, -3.23882, 35.404 )
-_sections_unfolded = [ "Transform" ]
+_sections_unfolded = [ "Material", "Transform" ]
 
 [node name="Sprite" type="Sprite" parent="Big2" index="1"]
 
 position = Vector2( 0, -7.15256e-07 )
 texture = ExtResource( 3 )
-_sections_unfolded = [ "Transform" ]
+_sections_unfolded = [ "Animation", "Material", "Offset", "Transform", "Visibility" ]
 
 [node name="Big3" type="Area2D" parent="." index="2"]
 
@@ -69,13 +71,14 @@ gravity_vec = Vector2( 0, 1 )
 gravity = 98.0
 linear_damp = 0.1
 angular_damp = 1.0
+priority = 4.0
 audio_bus_override = false
 audio_bus_name = "Master"
 _sections_unfolded = [ "Transform" ]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Big3" index="0"]
 
-build_mode = 1
+build_mode = 0
 polygon = PoolVector2Array( 21.7937, 42.2649, 46.6896, 2.9233, 31.9365, -29.9638, -11.0934, -41.9507, -46.132, -19.2064, -44.2879, 17.0617, -28.6127, 34.2737 )
 
 [node name="Sprite" type="Sprite" parent="Big3" index="1"]
@@ -84,7 +87,6 @@ texture = ExtResource( 4 )
 
 [node name="Medium1" type="Area2D" parent="." index="3"]
 
-editor/display_folded = true
 position = Vector2( 1.4505, 123.192 )
 input_pickable = true
 gravity_vec = Vector2( 0, 1 )
@@ -100,7 +102,7 @@ __meta__ = {
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Medium1" index="0"]
 
 build_mode = 0
-polygon = PoolVector2Array( 17.9377, 6.20113, 15.2933, -16.9373, -7.95536, -17.7086, -18.8635, -3.82551, -12.8034, 13.2529, -1.01382, 17.6602 )
+polygon = PoolVector2Array( 22.4651, 8.86441, 19.4495, -19.8992, -10.5898, -22.3348, -23.2319, -5.05344, -16.6209, 16.0553, 0.428483, 22.7823 )
 
 [node name="Sprite" type="Sprite" parent="Medium1" index="1"]
 
@@ -108,7 +110,6 @@ texture = ExtResource( 5 )
 
 [node name="Medium2" type="Area2D" parent="." index="4"]
 
-editor/display_folded = true
 position = Vector2( 62.411, 123.873 )
 input_pickable = true
 gravity_vec = Vector2( 0, 1 )
@@ -124,7 +125,7 @@ __meta__ = {
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Medium2" index="0"]
 
 build_mode = 0
-polygon = PoolVector2Array( 7.73706, -17.1945, -14.1164, -13.4098, -19.7324, 4.29278, -7.64584, 15.7689, 6.14994, 16.9898, 20.312, -2.42198 )
+polygon = PoolVector2Array( 10.1011, -21.624, -17.2707, -17.4486, -25.3894, 3.31216, -9.61587, 20.2456, 7.66547, 21.4054, 24.9468, -2.25497 )
 
 [node name="Sprite" type="Sprite" parent="Medium2" index="1"]
 

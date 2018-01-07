@@ -34,6 +34,7 @@ func _physics_process(delta):
 			bullet = bullets.instance()
 			bullet.position = self.position
 			bullet.rotation = self.rotation
+
 			get_parent().add_child(bullet)
 #			self.add_child(bullet)
 			$TimerBulletTimeout.start()

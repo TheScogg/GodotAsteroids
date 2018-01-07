@@ -1,40 +1,30 @@
 [gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Scenes/Bullet.gd" type="Script" id=1]
-[ext_resource path="res://Assets/Space shooter assets (300 assets)/PNG/Lasers/laserRed01.png" type="Texture" id=2]
+[ext_resource path="res://Assets/Space shooter assets (300 assets)/PNG/Lasers/laserRed05.png" type="Texture" id=2]
 
-[sub_resource type="RectangleShape2D" id=1]
+[sub_resource type="CapsuleShape2D" id=1]
 
 custom_solver_bias = 0.0
-extents = Vector2( 10, 28.768 )
+radius = 10.0
+height = 20.0
 
 [node name="Bullet" type="KinematicBody2D"]
 
 input_pickable = false
-collision_layer = 3
+collision_layer = 2
 collision_mask = 1
 collision/safe_margin = 0.08
 script = ExtResource( 1 )
-_sections_unfolded = [ "Angular", "Collision", "Linear", "Pickable", "Transform", "Visibility" ]
+_sections_unfolded = [ "Angular", "Collision", "Linear", "Pause", "Pickable", "Transform", "Visibility", "collision" ]
 bulletSpeed = 800
 
 [node name="Sprite" type="Sprite" parent="." index="0"]
 
 texture = ExtResource( 2 )
-_sections_unfolded = [ "Transform" ]
 
-[node name="TimerKill" type="Timer" parent="." index="1"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." index="1"]
 
-process_mode = 1
-wait_time = 3.0
-one_shot = false
-autostart = true
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." index="2"]
-
-light_mask = 2
-position = Vector2( -0.0614181, 0.248631 )
 shape = SubResource( 1 )
-_sections_unfolded = [ "Material", "Visibility", "Z" ]
 
 
