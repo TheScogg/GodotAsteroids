@@ -2,23 +2,34 @@ extends Area2D
 
 
 var scn_explosion = preload("res://Scenes/Explosion.tscn")
-var scn_asteroids = load("res://Scenes/Asteroids.tscn")
-var scn_asteroidSpawn = load("res://Scenes/AsteroidSpawn - Copy.gd")
-var vectorHeading = Vector2(0,0)
 var explosion 
+var scn_asteroids = preload("res://Scenes/Asteroids.tscn")
+var scn_asteroidSpawn = preload("res://Scenes/AsteroidSpawn - Copy.gd")
+var bulletHitTex = preload("res://Assets/Space shooter assets (300 assets)/PNG/Lasers/laserRed11.png")
+var vectorHeading = Vector2(0,0)
+#var explosion 
 var hits = 0
 var screensize
 var timer
+var timerKillBullet
 signal makeMedium
 signal makeSmall
 
 func _ready():
+	explosion = get_tree().get_root().get_child(0).get_node("AsteroidSpawn/Explosions").get_child(0)
 	screensize = get_viewport().get_visible_rect().size
 	startContainTimer()
 	set_pos_and_trajectory()
-	unhook()
 	set_physics_process(true)
 	
+func _physics_process(delta):
+	contain()
+	move_asteroids(delta)
+	
+	
+################BEGIN ASTEROID CONTAINMENT CODE############################
+############################################################################
+#Starts a timer to allow asteroids to enter playing field before enforcing 	
 func startContainTimer():
 	timer = Timer.new()
 	self.add_child(timer)
@@ -26,19 +37,9 @@ func startContainTimer():
 	timer.connect("timeout",self,"_on_timer_timeout")
 	timer.start()
 
-
 func _on_timer_timeout():
 	timer.stop()
-
-
-func unhook():
-
-	pass
-
-func _physics_process(delta):
-	contain()
-	move_asteroids(delta)
-
+	
 func contain():
 	if (timer.is_stopped()):
 		if (global_position.y <= 0):
@@ -49,8 +50,22 @@ func contain():
 			global_position.x = screensize.x - 1
 		if (global_position.x >= screensize.x):
 			global_position.x = 0
+############################################################################
+################END ASTEROID CONTAINMENT CODE###############################
 
+func free_bullet(body):
+	timerKillBullet = Timer.new()
+	timerKillBullet.wait_time = .1
+	timerKillBullet.connect("timeout",self,"_on_timer_free_bullet_timeout", [body])
+	timerKillBullet.start()
+	self.add_child(timerKillBullet)
+	
+func _on_timer_free_bullet_timeout(body):
+	timerKillBullet.stop()
+	body.queue_free()
 
+####################BEGIN ASTEROID PHYSICS CODE###############################
+############################################################################
 func move_asteroids(delta):
 
 	if (self.get_name().find("Big") != -1):
@@ -60,11 +75,7 @@ func move_asteroids(delta):
 		self.position += vectorHeading
 		self.rotation += 1.5 * delta
 	
-func player_collision():
-	print ("You're Dead...")
 
-func print_hello():
-	pass
 
 func set_pos_and_trajectory():
 	randomize()
@@ -73,34 +84,45 @@ func set_pos_and_trajectory():
 		get_parent().rotate(rand_range(PI/4, 3 * PI/4))
 	else:
 		vectorHeading = Vector2(randf() * 2.0 - 1, randf() * 2.0 - 1)
+############################################################################
+####################END ASTEROID PHYSICS CODE###############################
 
-		
+
+############################BEGIN COLLISION CODE############################
+############################################################################
+
+func player_collision():
+	print ("You're Dead...")	
 		
 func _body_entered( body ):
 	if (body.get_name().find("Bullet") != -1):
-		explosion = scn_explosion.instance()
+		hits += 1
+#		explosion = scn_explosion.instance()
 	#	if body.get_name().match("Bullet"):
-		body.queue_free()
-		explosion.position = Vector2(0,0)
-		self.add_child(explosion)
-		explosion.get_node("AnimationExplosion").play("explode")
+		body.get_node("Sprite").set_texture(bulletHitTex)
+
+		
 		
 	
 		if (self.get_name().find("Big") != -1 && hits == 5):
-			#!!!! Emit signal to be connected to in AsteroidSpawn, just like the timer signal in there
+			# Spawn 2 medium asteroids after destroying large asteroid, find and play explosion animation
 			emit_signal("makeMedium", self.global_position)
+			explosion.position = self.global_position
 			explosion.get_node("AnimationExplosion").play("explode")
 			self.queue_free()
 		elif (self.get_name().find("Medium") != -1 && hits == 5):
 			emit_signal("makeSmall", self.global_position)
-			explosion.get_node("AnimationExplosion").play("explode")
+			explosion.position = self.global_position
+			explosion.get_node("AnimationExplosion").play("explodeMedium")
 			self.queue_free()
 		elif (self.get_name().find("Small") != -1 && hits == 5):
-			explosion.get_node("AnimationExplosion").play("explode")
+			explosion.position = self.global_position
+			explosion.get_node("AnimationExplosion").play("explodeSmall")
 			self.queue_free()
-
-		
-	hits += 1
-
+			
+	elif (body.get_name().find("Player") != -1):
+		print ("You've been hit by a ", self.get_name(), " asteroid.")
+############################################################################
+############################END COLLISION CODE##############################
 
 

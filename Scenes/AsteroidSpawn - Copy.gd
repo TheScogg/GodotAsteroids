@@ -37,6 +37,7 @@ func create(size, asteroidPos, howMany):
 		asteroid.connect("makeMedium", self, "_make_medium")
 		asteroid.connect("makeSmall", self, "_make_small")
 		
+		#A) Add asteroid to follow path and follow path to path2D to bring asteroids in from outside the screen
 		if (size == "Big"):
 			asteroidFollowPath = PathFollow2D.new()
 			asteroidFollowPath.set_name("AsteroidPath")
@@ -44,9 +45,8 @@ func create(size, asteroidPos, howMany):
 		
 			#Path2D is a child of AsteroidSpawn node
 			$Path2D.add_child(asteroidFollowPath)
-
+		#B) Seperate from big asteroids since these are instanced at position of split big asteroids, not outside the screen
 		elif (size == "Medium" || size == "Small"):
-
 			$Freefloating.add_child(asteroid)
 
 
