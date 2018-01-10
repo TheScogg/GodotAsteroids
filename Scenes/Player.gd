@@ -10,12 +10,17 @@ var direction
 var velocity
 var canShoot = true
 var lives = 3
-
+var asteroid
 var engineSprites = []
 var bullet
 onready var bullets = preload("res://Scenes/Bullet.tscn")
 
 func _ready():
+
+	
+
+
+	
 	screensize = get_viewport().get_visible_rect().size
 	position = screensize / 2
 	motion = Vector2(0,0)
@@ -26,6 +31,9 @@ func _ready():
 	
 	engineSprites = get_tree().get_nodes_in_group("Thrusters")
 
+
+
+	
 func _physics_process(delta):
 
 		#Instance bullet scene upon Space Bar press
@@ -98,8 +106,15 @@ func _physics_process(delta):
 
 	position = position + motion
 
+func playerLives():
+	lives -= 1
+	print (lives)
 
+func _player_hit():
+	print ("Yo you got hit fool")
+	playerLives()
 
+	
 
 	
 
@@ -107,5 +122,10 @@ func _physics_process(delta):
 	###############################################################################
 
 func _on_Timer_timeout():
+	print (lives)
 	canShoot = true
 	$TimerBulletTimeout.start()
+
+
+func _on_Area2D_playerHit():
+	print ("FUCK OFF")

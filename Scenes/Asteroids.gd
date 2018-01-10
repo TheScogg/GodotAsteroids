@@ -5,7 +5,7 @@ var big = []
 var medium = []
 var small = []
 var asteroids
-signal body_entered
+
 
 func _ready():
 	set_physics_process(true)
@@ -37,9 +37,4 @@ func spawnAsteroid(size):
 		randomAsteroid = small[randi() % small.size()]
 
 	return randomAsteroid.duplicate()
-
-
-
-
-
 

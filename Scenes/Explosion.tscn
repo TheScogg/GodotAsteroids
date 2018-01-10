@@ -103,7 +103,7 @@ tracks/1/keys = {
 "values": [ Vector2( 0.25, 0.25 ) ]
 }
 
-[node name="Explosion" type="Area2D" index="0"]
+[node name="Explosion" type="Area2D"]
 
 input_pickable = true
 gravity_vec = Vector2( 0, 1 )

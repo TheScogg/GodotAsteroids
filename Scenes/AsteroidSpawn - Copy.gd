@@ -2,6 +2,7 @@ extends Node2D
 
 var scn_asteroids = preload("res://Scenes/Asteroids.tscn")
 var anAsteroidCode = preload("res://Scenes/anAsteroid.gd")
+var player = preload("res://Scenes/Player.tscn")
 var asteroid
 
 #var scn_explosion = preload("res://Scenes/Explosion.tscn")
@@ -15,6 +16,7 @@ var lives = 5
 
 
 func _ready():
+	player = player.instance()
 	#AsteroidSpawn
 
 	set_process(true)
@@ -24,18 +26,20 @@ func _process(delta):
 
 
 func create(size, asteroidPos, howMany):
-	print (asteroidPos)
+
 	for i in range(howMany):
 		asteroid = scn_asteroids.instance()
 		asteroid = asteroid.spawnAsteroid(size)
-	
+		
 		asteroid.global_position = asteroidPos
 		asteroid.set_script(anAsteroidCode)
 		
+
 		#Signal Lists 
 		asteroid.connect("body_entered", asteroid, "_body_entered")
 		asteroid.connect("makeMedium", self, "_make_medium")
 		asteroid.connect("makeSmall", self, "_make_small")
+		asteroid.connect("playerHit", player, "_player_hit")
 		
 		#A) Add asteroid to follow path and follow path to path2D to bring asteroids in from outside the screen
 		if (size == "Big"):
@@ -70,3 +74,6 @@ func _on_TimerAsteroid_timeout():
 		self.get_node("TimerAsteroid").queue_free()
 	
 	
+
+
+
