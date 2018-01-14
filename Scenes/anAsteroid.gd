@@ -111,49 +111,46 @@ func set_pos_and_trajectory():
 
 ############################BEGIN COLLISION CODE############################
 ############################################################################
-func bulletHit(body):
-	hits += 1
-#		explosion = scn_explosion.instance()
-#	if body.get_name().match("Bullet"):
-	var bulletHit = bullet.instance()
-	bulletHit.position = body.position
-	bulletHit.get_node("Sprite").set_texture(bulletHitTex)
-	bulletHit.get_node("Sprite").scale = Vector2(.5,.5)
-	get_tree().get_root().get_node("Main").add_child(bulletHit)
+func playerHit():
+	pass
 
-#		body.get_node("Sprite").set_texture(bulletHitTex)
-	body.queue_free()
-
-	if (self.get_name().find("Big") != -1 && hits == 5):
-		# Spawn 2 medium asteroids after destroying large asteroid, find and play explosion animation
-		emit_signal("makeMedium", self.global_position)
-		explosion.position = self.global_position
-		explosion.get_node("AnimationExplosion").play("explode")
-		self.queue_free()
-
-	elif (self.get_name().find("Medium") != -1 && hits == 5):
-		emit_signal("makeSmall", self.global_position)
-		explosion.position = self.global_position
-		explosion.get_node("AnimationExplosion").play("explodeMedium")
-		self.queue_free()
-	elif (self.get_name().find("Small") != -1 && hits == 5):
-		explosion.position = self.global_position
-		explosion.get_node("AnimationExplosion").play("explodeSmall")
-		self.queue_free()
-
-func playerHit(body):
-	for i in sizes:
-		if (self.get_name().find(i) != -1):
-			size = i
-				
-	emit_signal("playerHit", size)
 		
 func _body_entered( body ):
 	if (body.get_name().find("Bullet") != -1):
-		bulletHit(body)
+		hits += 1
+#		explosion = scn_explosion.instance()
+	#	if body.get_name().match("Bullet"):
+#		var bulletHit = bullet.instance()
+#		bulletHit.position = body.position
+#		bulletHit.get_node("Sprite").set_texture(bulletHitTex)
+#		get_tree().get_root().get_node("Main").add_child(bulletHit)
+
+#		body.get_node("Sprite").set_texture(bulletHitTex)
+		body.queue_free()
+
+		if (self.get_name().find("Big") != -1 && hits == 5):
+			# Spawn 2 medium asteroids after destroying large asteroid, find and play explosion animation
+			emit_signal("makeMedium", self.global_position)
+			explosion.position = self.global_position
+			explosion.get_node("AnimationExplosion").play("explode")
+			self.queue_free()
+
+		elif (self.get_name().find("Medium") != -1 && hits == 5):
+			emit_signal("makeSmall", self.global_position)
+			explosion.position = self.global_position
+			explosion.get_node("AnimationExplosion").play("explodeMedium")
+			self.queue_free()
+		elif (self.get_name().find("Small") != -1 && hits == 5):
+			explosion.position = self.global_position
+			explosion.get_node("AnimationExplosion").play("explodeSmall")
+			self.queue_free()
 	
 	elif (body.get_name().find("Player") != -1):
-		playerHit(body)
+		for i in sizes:
+			if (self.get_name().find(i) != -1):
+				size = i
+				
+		emit_signal("playerHit", size)
 ############################################################################
 ############################END COLLISION CODE##############################
 

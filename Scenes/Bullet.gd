@@ -11,7 +11,9 @@ export var bulletSpeed = 400
 
 func _ready():
 	motion = Vector2(-sin(rotation), cos(rotation)) 
-	print(get_node("Sprite").texture)
+
+	
+
 	if (get_node("Sprite").texture == bulletHitTex):
 		set_physics_process(true)
 	else:
@@ -21,7 +23,7 @@ func _ready():
 		xTimer.wait_time = .1
 		xTimer.connect("timeout",self,"_on_timer_timeout")
 		xTimer.start()
-#		emit_signal("timeout")
+#	
 	
 func _physics_process(delta):
 	position = position + (motion * delta * bulletSpeed)

@@ -96,6 +96,9 @@ func _physics_process(delta):
 		else:
 			direction = -1
 			motion = Vector2(-sin(rotation), cos(rotation)) * SPEED * delta * direction
+	
+	if (direction == -1 && !Input.is_action_pressed("ui_down")):
+		direction = 1
 		
 	if (Input.is_action_pressed("ui_right")):
 		self.rotate(delta * rotateBoost * direction)
