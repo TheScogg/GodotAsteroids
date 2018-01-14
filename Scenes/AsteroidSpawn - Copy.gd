@@ -39,7 +39,7 @@ func create(size, asteroidPos, howMany):
 		asteroid.connect("body_entered", asteroid, "_body_entered")
 		asteroid.connect("makeMedium", self, "_make_medium")
 		asteroid.connect("makeSmall", self, "_make_small")
-		asteroid.connect("playerHit", player, "_player_hit")
+#		asteroid.connect("playerHit", player, "_player_hit")
 		
 		#A) Add asteroid to follow path and follow path to path2D to bring asteroids in from outside the screen
 		if (size == "Big"):

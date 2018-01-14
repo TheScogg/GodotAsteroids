@@ -1,12 +1,23 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=7 format=2]
 
-[ext_resource path="res://Assets/moving-through-stars-in-space_-1zccenlb__F0000.png" type="Texture" id=1]
-[ext_resource path="res://Scenes/AsteroidSpawn.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Scenes/Player.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scenes/Main.gd" type="Script" id=1]
+[ext_resource path="res://Assets/moving-through-stars-in-space_-1zccenlb__F0000.png" type="Texture" id=2]
+[ext_resource path="res://Assets/Fonts/SF Atarian System Extended Italic.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://Scenes/AsteroidSpawn.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Scenes/Player.tscn" type="PackedScene" id=5]
+
+[sub_resource type="DynamicFont" id=1]
+
+size = 33
+use_mipmaps = false
+use_filter = false
+font_data = ExtResource( 3 )
+_sections_unfolded = [ "Extra Spacing", "Font", "Settings" ]
 
 [node name="Main" type="Node2D"]
 
 z = 1
+script = ExtResource( 1 )
 _sections_unfolded = [ "Visibility", "Z" ]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." index="0"]
@@ -18,9 +29,9 @@ scale = Vector2( 1, 1 )
 
 [node name="spacebg_01" type="Sprite" parent="CanvasLayer" index="0"]
 
-position = Vector2( 1051.74, 569.512 )
+position = Vector2( 1049.02, 776.289 )
 scale = Vector2( 1.66814, 1.66814 )
-texture = ExtResource( 1 )
+texture = ExtResource( 2 )
 region_rect = Rect2( 0, 0, 256, 256 )
 _sections_unfolded = [ "Animation", "Offset", "Region", "Transform" ]
 
@@ -35,32 +46,50 @@ mouse_filter = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
 
-[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/Control" index="0"]
+[node name="LivesLabel" type="Label" parent="CanvasLayer/Control" index="0"]
 
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_right = 197.0
-margin_bottom = 172.0
+margin_left = 8.0
+margin_top = 11.0
+margin_right = 103.0
+margin_bottom = 31.0
 rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = true
-hint_tooltip = "Lives:"
-mouse_filter = 0
+mouse_filter = 2
+size_flags_horizontal = 1
+size_flags_vertical = 4
+custom_fonts/font = SubResource( 1 )
+text = "Ships:"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "custom_fonts" ]
+
+[node name="LivesContainer" type="HBoxContainer" parent="CanvasLayer/Control" index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 128.0
+margin_right = 290.0
+margin_bottom = 57.0
+rect_pivot_offset = Vector2( 0, 0 )
+mouse_filter = 1
 size_flags_horizontal = 1
 size_flags_vertical = 1
-custom_colors/default_color = Color( 1, 1, 1, 1 )
-bbcode_enabled = false
-bbcode_text = ""
-visible_characters = -1
-percent_visible = 1.0
-override_selected_font_color = false
-_sections_unfolded = [ "BBCode", "Focus", "Grow Direction", "Hint", "Margin", "Mouse", "Rect", "Size Flags", "Theme", "Visibility", "custom_colors", "custom_fonts", "custom_styles" ]
+alignment = 0
+_sections_unfolded = [ "Anchor", "Hint", "Margin", "Rect" ]
 
-[node name="AsteroidSpawn" parent="." index="1" instance=ExtResource( 2 )]
+[node name="AsteroidSpawn" parent="." index="1" instance=ExtResource( 4 )]
 
-[node name="Player" parent="." index="2" instance=ExtResource( 3 )]
+editor/display_folded = true
 
+[node name="Player" parent="." index="2" instance=ExtResource( 5 )]
+
+editor/display_folded = true
 z = 1
 
 

@@ -1,10 +1,32 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Scenes/Player.gd" type="Script" id=1]
-[ext_resource path="res://Assets/Space shooter assets (300 assets)/PNG/Effects/fire13.png" type="Texture" id=2]
-[ext_resource path="res://Assets/Space shooter assets (300 assets)/PNG/playerShip2_red.png" type="Texture" id=3]
+[ext_resource path="res://Assets/Space shooter assets (300 assets)/PNG/Effects/shield1.png" type="Texture" id=2]
+[ext_resource path="res://Assets/Space shooter assets (300 assets)/PNG/Effects/shield2.png" type="Texture" id=3]
+[ext_resource path="res://Assets/Space shooter assets (300 assets)/PNG/Effects/shield3.png" type="Texture" id=4]
+[ext_resource path="res://Assets/Space shooter assets (300 assets)/PNG/Effects/fire13.png" type="Texture" id=5]
+[ext_resource path="res://Assets/Space shooter assets (300 assets)/PNG/playerShip2_red.png" type="Texture" id=6]
 
-[sub_resource type="ShaderMaterial" id=1]
+[sub_resource type="Animation" id=1]
+
+resource_name = "shield"
+length = 0.4
+loop = false
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("SpriteShield:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ null, ExtResource( 2 ), ExtResource( 3 ), ExtResource( 4 ), null ]
+}
+
+[sub_resource type="ShaderMaterial" id=2]
 
 render_priority = 0
 
@@ -20,66 +42,105 @@ _sections_unfolded = [ "Collision", "Pickable", "Transform", "Z", "collision" ]
 SPEED = 400
 DETERIORATION = -0.05
 
-[node name="SpriteEngineFL" type="Sprite" parent="." index="0" groups=[
+[node name="Shield" type="Area2D" parent="." index="0"]
+
+input_pickable = true
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+audio_bus_override = false
+audio_bus_name = "Master"
+
+[node name="SpriteShield" type="Sprite" parent="Shield" index="0"]
+
+modulate = Color( 0.867213, 0.871094, 0.374298, 1 )
+_sections_unfolded = [ "Material", "Visibility" ]
+
+[node name="AnimationShield" type="AnimationPlayer" parent="Shield" index="1"]
+
+playback_process_mode = 1
+playback_default_blend_time = 0.0
+root_node = NodePath("..")
+anims/shield = SubResource( 1 )
+playback/active = true
+playback/speed = 1.0
+blend_times = [  ]
+autoplay = ""
+_sections_unfolded = [ "Playback Options" ]
+
+[node name="AnimationShield2" type="AnimationPlayer" parent="Shield" index="2"]
+
+playback_process_mode = 1
+playback_default_blend_time = 0.0
+root_node = NodePath("..")
+anims/shield = SubResource( 1 )
+playback/active = true
+playback/speed = 1.0
+blend_times = [  ]
+autoplay = ""
+_sections_unfolded = [ "Playback Options" ]
+
+[node name="SpriteEngineFL" type="Sprite" parent="." index="1" groups=[
 "Thrusters",
 ]]
 
 visible = false
 position = Vector2( 27.4378, -45.8394 )
 rotation = -0.244346
-texture = ExtResource( 2 )
+texture = ExtResource( 5 )
 flip_h = true
 _sections_unfolded = [ "Animation", "Offset", "Transform", "Visibility" ]
 
-[node name="SpriteThrusterFR" type="Sprite" parent="." index="1" groups=[
+[node name="SpriteThrusterFR" type="Sprite" parent="." index="2" groups=[
 "Thrusters",
 ]]
 
 visible = false
-material = SubResource( 1 )
+material = SubResource( 2 )
 position = Vector2( -26.9326, -45.1401 )
 rotation = 0.244346
-texture = ExtResource( 2 )
+texture = ExtResource( 5 )
 _sections_unfolded = [ "Animation", "Material", "Offset", "Transform", "Visibility", "Z" ]
 
-[node name="SpriteThrusterRL" type="Sprite" parent="." index="2" groups=[
+[node name="SpriteThrusterRL" type="Sprite" parent="." index="3" groups=[
 "Thrusters",
 ]]
 
 position = Vector2( 53.8155, 3.27927 )
 rotation = -0.244346
 scale = Vector2( 1, 0.5 )
-texture = ExtResource( 2 )
+texture = ExtResource( 5 )
 flip_h = true
 flip_v = true
 _sections_unfolded = [ "Animation", "Offset", "Transform", "Visibility" ]
 
-[node name="SpriteThrusterRR" type="Sprite" parent="." index="3" groups=[
+[node name="SpriteThrusterRR" type="Sprite" parent="." index="4" groups=[
 "Thrusters",
 ]]
 
-material = SubResource( 1 )
+material = SubResource( 2 )
 position = Vector2( -52.555, 3.97851 )
 rotation = 0.244346
 scale = Vector2( 1, 0.5 )
-texture = ExtResource( 2 )
+texture = ExtResource( 5 )
 flip_v = true
 _sections_unfolded = [ "Animation", "Material", "Offset", "Transform", "Visibility" ]
 
-[node name="SpriteShip" type="Sprite" parent="." index="4"]
+[node name="SpriteShip" type="Sprite" parent="." index="5"]
 
 rotation = 3.14159
-texture = ExtResource( 3 )
+texture = ExtResource( 6 )
 _sections_unfolded = [ "Animation", "Transform", "Z" ]
 
-[node name="TimerBulletTimeout" type="Timer" parent="." index="5"]
+[node name="TimerBulletTimeout" type="Timer" parent="." index="6"]
 
 process_mode = 1
 wait_time = 0.1
 one_shot = false
 autostart = false
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." index="6"]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." index="7"]
 
 position = Vector2( 0.174805, 0.174866 )
 build_mode = 0

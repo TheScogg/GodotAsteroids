@@ -9,7 +9,7 @@
 [ext_resource path="res://Assets/Space shooter assets (300 assets)/PNG/Meteors/meteorGrey_tiny1.png" type="Texture" id=7]
 [ext_resource path="res://Assets/Space shooter assets (300 assets)/PNG/Meteors/meteorGrey_tiny2.png" type="Texture" id=8]
 
-[node name="Asteroids" type="Node2D"]
+[node name="Asteroids" type="Node2D" index="0"]
 
 script = ExtResource( 1 )
 _sections_unfolded = [ "Z" ]

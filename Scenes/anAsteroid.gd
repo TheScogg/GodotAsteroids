@@ -1,7 +1,11 @@
 extends Area2D
 
+#var player = preload("res://Scenes/Player.tscn")
+var player 
+var main
 
 var scn_explosion = preload("res://Scenes/Explosion.tscn")
+var bullet = preload("res://Scenes/Bullet.tscn")
 var explosion 
 var bulletHitTex = preload("res://Assets/Space shooter assets (300 assets)/PNG/Lasers/laserRed11.png")
 
@@ -11,24 +15,36 @@ var hits = 0
 var screensize
 var timer
 
+var size
+var sizes = ["Big", "Medium", "Small"]
 var timerKillBullet
 signal makeMedium
 signal makeSmall
 signal playerHit
 
 func _ready():
-	explosion = get_tree().get_root().get_child(0).get_node("AsteroidSpawn/Explosions").get_child(0)
 	screensize = get_viewport().get_visible_rect().size
+	
+	makeConnections()
 	startContainTimer()
 	set_pos_and_trajectory()
 	set_physics_process(true)
 
-
+	add_to_group("Asteroids")
 	
 func _physics_process(delta):
 	contain()
 	move_asteroids(delta)
 	
+func makeConnections():
+	player = (get_tree().get_root().get_node("Main/Player"))
+	main = (get_tree().get_root().get_node("Main"))
+	print ("main is ", main.get_name())
+
+	self.connect("body_entered", self, "_body_entered")
+	self.connect("playerHit", main, "_player_hit")
+	explosion = get_tree().get_root().get_node("Main/AsteroidSpawn/Explosions").get_child(0)
+
 	
 ################BEGIN ASTEROID CONTAINMENT CODE############################
 ############################################################################
@@ -95,37 +111,49 @@ func set_pos_and_trajectory():
 
 ############################BEGIN COLLISION CODE############################
 ############################################################################
-func _player_hit():
-	print ("Playerr pdsajljdkfjk")
+func bulletHit(body):
+	hits += 1
+#		explosion = scn_explosion.instance()
+#	if body.get_name().match("Bullet"):
+	var bulletHit = bullet.instance()
+	bulletHit.position = body.position
+	bulletHit.get_node("Sprite").set_texture(bulletHitTex)
+	bulletHit.get_node("Sprite").scale = Vector2(.5,.5)
+	get_tree().get_root().get_node("Main").add_child(bulletHit)
 
+#		body.get_node("Sprite").set_texture(bulletHitTex)
+	body.queue_free()
+
+	if (self.get_name().find("Big") != -1 && hits == 5):
+		# Spawn 2 medium asteroids after destroying large asteroid, find and play explosion animation
+		emit_signal("makeMedium", self.global_position)
+		explosion.position = self.global_position
+		explosion.get_node("AnimationExplosion").play("explode")
+		self.queue_free()
+
+	elif (self.get_name().find("Medium") != -1 && hits == 5):
+		emit_signal("makeSmall", self.global_position)
+		explosion.position = self.global_position
+		explosion.get_node("AnimationExplosion").play("explodeMedium")
+		self.queue_free()
+	elif (self.get_name().find("Small") != -1 && hits == 5):
+		explosion.position = self.global_position
+		explosion.get_node("AnimationExplosion").play("explodeSmall")
+		self.queue_free()
+
+func playerHit(body):
+	for i in sizes:
+		if (self.get_name().find(i) != -1):
+			size = i
+				
+	emit_signal("playerHit", size)
 		
 func _body_entered( body ):
 	if (body.get_name().find("Bullet") != -1):
-		hits += 1
-#		explosion = scn_explosion.instance()
-	#	if body.get_name().match("Bullet"):
-		body.get_node("Sprite").set_texture(bulletHitTex)
-
-		
-		if (self.get_name().find("Big") != -1 && hits == 5):
-			# Spawn 2 medium asteroids after destroying large asteroid, find and play explosion animation
-			emit_signal("makeMedium", self.global_position)
-			explosion.position = self.global_position
-			explosion.get_node("AnimationExplosion").play("explode")
-			self.queue_free()
-			print (OS.get_datetime().minute)
-		elif (self.get_name().find("Medium") != -1 && hits == 5):
-			emit_signal("makeSmall", self.global_position)
-			explosion.position = self.global_position
-			explosion.get_node("AnimationExplosion").play("explodeMedium")
-			self.queue_free()
-		elif (self.get_name().find("Small") != -1 && hits == 5):
-			explosion.position = self.global_position
-			explosion.get_node("AnimationExplosion").play("explodeSmall")
-			self.queue_free()
-			
+		bulletHit(body)
+	
 	elif (body.get_name().find("Player") != -1):
-		emit_signal("playerHit")
+		playerHit(body)
 ############################################################################
 ############################END COLLISION CODE##############################
 

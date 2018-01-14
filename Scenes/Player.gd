@@ -9,18 +9,23 @@ var rotateBoost
 var direction
 var velocity
 var canShoot = true
-var lives = 3
-var asteroid
+var lives = 50
+
+
+
+
 var engineSprites = []
 var bullet
 onready var bullets = preload("res://Scenes/Bullet.tscn")
+onready var asteroid = preload("res://Scenes/Asteroids.tscn")
+onready var shieldAnimation = get_node("Shield/AnimationShield")
+var hit = false;
 
 func _ready():
+	#/root/Main/AsteroidSpawn/Path2D/@AsteroidPath@3/Big3
 
-	
 
-
-	
+	print (shieldAnimation)
 	screensize = get_viewport().get_visible_rect().size
 	position = screensize / 2
 	motion = Vector2(0,0)
@@ -60,6 +65,7 @@ func _physics_process(delta):
 	#Hold shift for tighter turns, deteriorates after use
 	if (Input.is_action_pressed("ui_shift")):
 		SPEED = SPEED * 1.5
+
 	#Drag on ship when throttle is not on
 	
 	#If no forward or backwards thrust, turn off thruster sprites and deteriorate velocity 
@@ -70,6 +76,9 @@ func _physics_process(delta):
 
 	#If pressing up, show forward thrusters. Deteriorate if moving backwards, and reverse direction when threshold reached
 	if (Input.is_action_pressed("ui_up")):
+
+
+
 		for i in range(2):
 			engineSprites[i].visible = true
 		if (abs(motion.x) > .04 && abs(motion.y) > .04 && direction == -1):
@@ -106,15 +115,15 @@ func _physics_process(delta):
 
 	position = position + motion
 
-func playerLives():
-	lives -= 1
-	print (lives)
+
+
 
 func _player_hit():
-	print ("Yo you got hit fool")
-	playerLives()
-
+	lives -= 1
+	print (lives)
 	
+
+
 
 	
 
@@ -122,10 +131,11 @@ func _player_hit():
 	###############################################################################
 
 func _on_Timer_timeout():
-	print (lives)
+
 	canShoot = true
 	$TimerBulletTimeout.start()
 
 
-func _on_Area2D_playerHit():
-	print ("FUCK OFF")
+
+
+
