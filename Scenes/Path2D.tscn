@@ -9,7 +9,6 @@ _data = {
 
 [node name="Path2D" type="Path2D"]
 
-z = 7
 curve = SubResource( 1 )
 _sections_unfolded = [ "Transform", "Visibility", "Z" ]
 

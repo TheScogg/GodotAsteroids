@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/metalScraping.wav-255e5a2076cbdd8545e5199d00dc08c9.sample"
+
+[deps]
+
+source_file="res://Assets/Sounds/metalScraping.wav"
+source_md5="98fde2637169b99b556e105f6e787fce"
+
+dest_files=[ "res://.import/metalScraping.wav-255e5a2076cbdd8545e5199d00dc08c9.sample" ]
+dest_md5="8a354d0c528d9f6858727052befd599b"
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=true
+edit/normalize=true
+edit/loop=false
+compress/mode=0

@@ -18,9 +18,11 @@ var timer
 var size
 var sizes = ["Big", "Medium", "Small"]
 var timerKillBullet
+var xTimer
 signal makeMedium
 signal makeSmall
 signal playerHit
+signal bulletExplode
 
 func _ready():
 	screensize = get_viewport().get_visible_rect().size
@@ -39,10 +41,12 @@ func _physics_process(delta):
 func makeConnections():
 	player = (get_tree().get_root().get_node("Main/Player"))
 	main = (get_tree().get_root().get_node("Main"))
-	print ("main is ", main.get_name())
+	
+
 
 	self.connect("body_entered", self, "_body_entered")
 	self.connect("playerHit", main, "_player_hit")
+
 	explosion = get_tree().get_root().get_node("Main/AsteroidSpawn/Explosions").get_child(0)
 
 	
@@ -72,16 +76,16 @@ func contain():
 ############################################################################
 ################END ASTEROID CONTAINMENT CODE###############################
 
-func free_bullet(body):
-	timerKillBullet = Timer.new()
-	timerKillBullet.wait_time = .1
-	timerKillBullet.connect("timeout",self,"_on_timer_free_bullet_timeout", [body])
-	timerKillBullet.start()
-	self.add_child(timerKillBullet)
-	
-func _on_timer_free_bullet_timeout(body):
-	timerKillBullet.stop()
-	body.queue_free()
+#func free_bullet(body):
+#	timerKillBullet = Timer.new()
+#	timerKillBullet.wait_time = 3
+#	timerKillBullet.connect("timeout",self,"_on_timer_free_bullet_timeout", [body])
+#	timerKillBullet.start()
+#	self.add_child(timerKillBullet)
+#
+#func _on_timer_free_bullet_timeout(body):
+#	timerKillBullet.stop()
+#	body.queue_free()
 
 ####################BEGIN ASTEROID PHYSICS CODE###############################
 ############################################################################
@@ -111,46 +115,64 @@ func set_pos_and_trajectory():
 
 ############################BEGIN COLLISION CODE############################
 ############################################################################
-func playerHit():
-	pass
+#func _player_hit():
+#	print ("Playerr pdsajljdkfjk")
+
+
+
+
+
+func playSound(sound):
+	var soundLocation = ("Main/Sounds/" + sound)
+	print (soundLocation)
+	var soundRoot = get_tree().get_root().get_node(soundLocation)
+	print (soundRoot)
+	soundRoot.play()
 
 		
 func _body_entered( body ):
 	if (body.get_name().find("Bullet") != -1):
 		hits += 1
-#		explosion = scn_explosion.instance()
-	#	if body.get_name().match("Bullet"):
-#		var bulletHit = bullet.instance()
-#		bulletHit.position = body.position
-#		bulletHit.get_node("Sprite").set_texture(bulletHitTex)
-#		get_tree().get_root().get_node("Main").add_child(bulletHit)
 
-#		body.get_node("Sprite").set_texture(bulletHitTex)
-		body.queue_free()
+
+
+		var bulletHit = bullet.instance()
+		bulletHit.position = body.position
+		bulletHit.remove_child(bulletHit.get_node("CollisionShape2D"))
+		bulletHit.get_node("Sprite").set_texture(bulletHitTex)
+		bulletHit.get_node("Sprite").scale = Vector2(.5,.5)
+		get_tree().get_root().get_node("Main").add_child(bulletHit)
+
 
 		if (self.get_name().find("Big") != -1 && hits == 5):
 			# Spawn 2 medium asteroids after destroying large asteroid, find and play explosion animation
 			emit_signal("makeMedium", self.global_position)
 			explosion.position = self.global_position
 			explosion.get_node("AnimationExplosion").play("explode")
+			playSound("Explosion")
 			self.queue_free()
-
 		elif (self.get_name().find("Medium") != -1 && hits == 5):
 			emit_signal("makeSmall", self.global_position)
 			explosion.position = self.global_position
 			explosion.get_node("AnimationExplosion").play("explodeMedium")
+			playSound("Explosion")
 			self.queue_free()
 		elif (self.get_name().find("Small") != -1 && hits == 5):
 			explosion.position = self.global_position
 			explosion.get_node("AnimationExplosion").play("explodeSmall")
+			playSound("Explosion")
 			self.queue_free()
-	
+		
+		body.queue_free()	
+		
 	elif (body.get_name().find("Player") != -1):
 		for i in sizes:
 			if (self.get_name().find(i) != -1):
 				size = i
-				
+#		playSound("MetalScraping")		
 		emit_signal("playerHit", size)
+		
+
 ############################################################################
 ############################END COLLISION CODE##############################
 

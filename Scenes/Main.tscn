@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://Scenes/Main.gd" type="Script" id=1]
 [ext_resource path="res://Assets/moving-through-stars-in-space_-1zccenlb__F0000.png" type="Texture" id=2]
@@ -7,8 +7,10 @@
 [ext_resource path="res://Assets/UI/progress_redBorder.png" type="Texture" id=5]
 [ext_resource path="res://Assets/UI/progress_greenBorder.png" type="Texture" id=6]
 [ext_resource path="res://Assets/Space shooter assets (300 assets)/PNG/UI/playerLife1_red.png" type="Texture" id=7]
-[ext_resource path="res://Scenes/AsteroidSpawn.tscn" type="PackedScene" id=8]
-[ext_resource path="res://Scenes/Player.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Assets/Fonts/ka1.ttf" type="DynamicFontData" id=8]
+[ext_resource path="res://Scenes/AsteroidSpawn.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Scenes/Sounds.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Scenes/Player.tscn" type="PackedScene" id=11]
 
 [sub_resource type="DynamicFont" id=1]
 
@@ -18,40 +20,61 @@ use_filter = false
 font_data = ExtResource( 4 )
 _sections_unfolded = [ "Extra Spacing", "Font", "Settings" ]
 
-[node name="Main" type="Node2D" index="0"]
+[sub_resource type="Shader" id=2]
 
-z = 1
+code = ""
+
+[sub_resource type="ShaderMaterial" id=3]
+
+render_priority = 0
+shader = SubResource( 2 )
+_sections_unfolded = [ "Resource" ]
+
+[sub_resource type="DynamicFont" id=4]
+
+size = 128
+use_mipmaps = false
+use_filter = false
+font_data = ExtResource( 8 )
+_sections_unfolded = [ "Font", "Settings" ]
+
+[node name="Main" type="Node2D"]
+
 script = ExtResource( 1 )
 _sections_unfolded = [ "Visibility", "Z" ]
 lives = 3
 damageMultiplier = 40
 
-[node name="CanvasLayer" type="CanvasLayer" parent="." index="0"]
-
-layer = -1
-offset = Vector2( 0, 0 )
-rotation = 0.0
-scale = Vector2( 1, 1 )
-
-[node name="spacebg_01" type="Sprite" parent="CanvasLayer" index="0"]
+[node name="spacebg_01" type="Sprite" parent="." index="0"]
 
 position = Vector2( 1049.02, 776.289 )
 scale = Vector2( 1.66814, 1.66814 )
 texture = ExtResource( 2 )
 region_rect = Rect2( 0, 0, 256, 256 )
-_sections_unfolded = [ "Animation", "Material", "Offset", "Region", "Transform", "Visibility" ]
+_sections_unfolded = [ "Animation", "Material", "Offset", "Region", "Transform", "Visibility", "Z Index" ]
 
-[node name="UI" type="Control" parent="CanvasLayer" index="1"]
+[node name="CanvasLayer" type="CanvasLayer" parent="." index="1"]
 
+layer = 0
+offset = Vector2( 0, 0 )
+rotation = 0.0
+scale = Vector2( 1, 1 )
+transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+
+[node name="UI" type="Control" parent="CanvasLayer" index="0"]
+
+pause_mode = 2
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 0
+mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
 script = ExtResource( 3 )
+_sections_unfolded = [ "Pause" ]
 
 [node name="XPContainer" type="HBoxContainer" parent="CanvasLayer/UI" index="0"]
 
@@ -64,6 +87,7 @@ margin_bottom = 34.0
 rect_scale = Vector2( 2, 2 )
 rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 1
+mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
 alignment = 0
@@ -80,6 +104,7 @@ margin_right = 45.0
 margin_bottom = 27.0
 rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 2
+mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 4
 custom_fonts/font = SubResource( 1 )
@@ -102,6 +127,7 @@ margin_right = 65.0
 margin_bottom = 34.0
 rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 1
+mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
 min_value = 0.0
@@ -133,6 +159,7 @@ margin_bottom = 57.0
 rect_scale = Vector2( 2, 2 )
 rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 1
+mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
 alignment = 2
@@ -149,6 +176,7 @@ margin_right = 169.0
 margin_bottom = 34.0
 rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 1
+mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
 texture = ExtResource( 7 )
@@ -166,6 +194,7 @@ margin_right = 206.0
 margin_bottom = 34.0
 rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 1
+mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
 texture = ExtResource( 7 )
@@ -183,18 +212,56 @@ margin_right = 243.0
 margin_bottom = 34.0
 rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 1
+mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
 texture = ExtResource( 7 )
 stretch_mode = 0
 _sections_unfolded = [ "Anchor", "Margin", "Material", "Visibility" ]
 
-[node name="AsteroidSpawn" parent="." index="1" instance=ExtResource( 8 )]
+[node name="PauseLabel" type="Label" parent="CanvasLayer/UI" index="2"]
 
-[node name="Player" parent="." index="2" instance=ExtResource( 9 )]
+visible = false
+material = SubResource( 3 )
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -282.5
+margin_top = -72.0
+margin_right = 282.5
+margin_bottom = 72.0
+rect_pivot_offset = Vector2( 0, 0 )
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+custom_fonts/font = SubResource( 4 )
+text = "PAUSE"
+align = 1
+valign = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "Material", "Pause", "Visibility", "custom_fonts", "custom_styles" ]
 
-z = 1
+[node name="AsteroidSpawn" parent="." index="2" instance=ExtResource( 9 )]
+
+[node name="TimerAsteroid" parent="AsteroidSpawn" index="3"]
+
+wait_time = 3.0
+
+[node name="Sounds" parent="." index="3" instance=ExtResource( 10 )]
+
+editor/display_folded = true
+_sections_unfolded = [ "Pause", "Transform" ]
+
+[node name="Player" parent="." index="4" instance=ExtResource( 11 )]
+
+editor/display_folded = true
+_sections_unfolded = [ "Collision", "Pause", "Pickable", "Transform", "Z", "Z Index", "collision" ]
 
 
 [editable path="AsteroidSpawn"]
+[editable path="Sounds"]
 [editable path="Player"]

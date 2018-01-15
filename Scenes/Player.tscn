@@ -1,36 +1,37 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Scenes/Player.gd" type="Script" id=1]
-[ext_resource path="res://Assets/Space shooter assets (300 assets)/PNG/Effects/shield1.png" type="Texture" id=2]
-[ext_resource path="res://Assets/Space shooter assets (300 assets)/PNG/Effects/shield2.png" type="Texture" id=3]
-[ext_resource path="res://Assets/Space shooter assets (300 assets)/PNG/Effects/shield3.png" type="Texture" id=4]
-[ext_resource path="res://Assets/Space shooter assets (300 assets)/PNG/Effects/fire13.png" type="Texture" id=5]
-[ext_resource path="res://Assets/Space shooter assets (300 assets)/PNG/playerShip2_red.png" type="Texture" id=6]
+[ext_resource path="res://Assets/Space shooter assets (300 assets)/PNG/Effects/fire13.png" type="Texture" id=2]
+[ext_resource path="res://Assets/Space shooter assets (300 assets)/PNG/playerShip2_red.png" type="Texture" id=3]
+[ext_resource path="res://Assets/Sounds/laserShot.wav" type="AudioStream" id=4]
+[ext_resource path="res://Assets/Space shooter assets (300 assets)/PNG/Damage/playerShip1_damage1.png" type="Texture" id=5]
+[ext_resource path="res://Assets/Space shooter assets (300 assets)/PNG/Damage/playerShip1_damage2.png" type="Texture" id=6]
+[ext_resource path="res://Assets/Space shooter assets (300 assets)/PNG/Damage/playerShip1_damage3.png" type="Texture" id=7]
 
-[sub_resource type="Animation" id=1]
+[sub_resource type="ShaderMaterial" id=1]
 
-resource_name = "shield"
-length = 0.4
+render_priority = 0
+
+[sub_resource type="Animation" id=2]
+
+resource_name = "explode"
+length = 1.0
 loop = false
 step = 0.1
 tracks/0/type = "value"
-tracks/0/path = NodePath("SpriteShield:texture")
+tracks/0/path = NodePath("SpriteShip:texture")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4 ),
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
 "update": 1,
-"values": [ null, ExtResource( 2 ), ExtResource( 3 ), ExtResource( 4 ), null ]
+"values": [ ExtResource( 3 ), ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ), null ]
 }
 
-[sub_resource type="ShaderMaterial" id=2]
-
-render_priority = 0
-
-[node name="Player" type="KinematicBody2D"]
+[node name="Player" type="KinematicBody2D" index="0"]
 
 position = Vector2( 956.92, 579.506 )
 input_pickable = false
@@ -38,7 +39,7 @@ collision_layer = 1
 collision_mask = 1
 collision/safe_margin = 0.08
 script = ExtResource( 1 )
-_sections_unfolded = [ "Collision", "Pickable", "Transform", "Z", "collision" ]
+_sections_unfolded = [ "Collision", "Material", "Pause", "Pickable", "Transform", "Visibility", "Z", "Z Index", "collision" ]
 SPEED = 400
 DETERIORATION = -0.05
 
@@ -55,31 +56,17 @@ audio_bus_name = "Master"
 [node name="SpriteShield" type="Sprite" parent="Shield" index="0"]
 
 modulate = Color( 0.867213, 0.871094, 0.374298, 1 )
-_sections_unfolded = [ "Material", "Visibility" ]
+_sections_unfolded = [ "Material", "Pause", "Visibility" ]
 
 [node name="AnimationShield" type="AnimationPlayer" parent="Shield" index="1"]
 
+root_node = NodePath("..")
+autoplay = ""
 playback_process_mode = 1
 playback_default_blend_time = 0.0
-root_node = NodePath("..")
-anims/shield = SubResource( 1 )
-playback/active = true
-playback/speed = 1.0
+playback_speed = 1.0
 blend_times = [  ]
 autoplay = ""
-_sections_unfolded = [ "Playback Options" ]
-
-[node name="AnimationShield2" type="AnimationPlayer" parent="Shield" index="2"]
-
-playback_process_mode = 1
-playback_default_blend_time = 0.0
-root_node = NodePath("..")
-anims/shield = SubResource( 1 )
-playback/active = true
-playback/speed = 1.0
-blend_times = [  ]
-autoplay = ""
-_sections_unfolded = [ "Playback Options" ]
 
 [node name="SpriteEngineFL" type="Sprite" parent="." index="1" groups=[
 "Thrusters",
@@ -88,7 +75,7 @@ _sections_unfolded = [ "Playback Options" ]
 visible = false
 position = Vector2( 27.4378, -45.8394 )
 rotation = -0.244346
-texture = ExtResource( 5 )
+texture = ExtResource( 2 )
 flip_h = true
 _sections_unfolded = [ "Animation", "Offset", "Transform", "Visibility" ]
 
@@ -97,10 +84,10 @@ _sections_unfolded = [ "Animation", "Offset", "Transform", "Visibility" ]
 ]]
 
 visible = false
-material = SubResource( 2 )
+material = SubResource( 1 )
 position = Vector2( -26.9326, -45.1401 )
 rotation = 0.244346
-texture = ExtResource( 5 )
+texture = ExtResource( 2 )
 _sections_unfolded = [ "Animation", "Material", "Offset", "Transform", "Visibility", "Z" ]
 
 [node name="SpriteThrusterRL" type="Sprite" parent="." index="3" groups=[
@@ -110,7 +97,7 @@ _sections_unfolded = [ "Animation", "Material", "Offset", "Transform", "Visibili
 position = Vector2( 53.8155, 3.27927 )
 rotation = -0.244346
 scale = Vector2( 1, 0.5 )
-texture = ExtResource( 5 )
+texture = ExtResource( 2 )
 flip_h = true
 flip_v = true
 _sections_unfolded = [ "Animation", "Offset", "Transform", "Visibility" ]
@@ -119,18 +106,18 @@ _sections_unfolded = [ "Animation", "Offset", "Transform", "Visibility" ]
 "Thrusters",
 ]]
 
-material = SubResource( 2 )
+material = SubResource( 1 )
 position = Vector2( -52.555, 3.97851 )
 rotation = 0.244346
 scale = Vector2( 1, 0.5 )
-texture = ExtResource( 5 )
+texture = ExtResource( 2 )
 flip_v = true
 _sections_unfolded = [ "Animation", "Material", "Offset", "Transform", "Visibility" ]
 
 [node name="SpriteShip" type="Sprite" parent="." index="5"]
 
 rotation = 3.14159
-texture = ExtResource( 6 )
+texture = ExtResource( 3 )
 _sections_unfolded = [ "Animation", "Transform", "Z" ]
 
 [node name="TimerBulletTimeout" type="Timer" parent="." index="6"]
@@ -142,10 +129,43 @@ autostart = false
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." index="7"]
 
+visible = false
 position = Vector2( 0.174805, 0.174866 )
 build_mode = 0
 polygon = PoolVector2Array( -35.2607, -30.4686, -49.5682, -8.56946, -9.56561, 9.53387, 0.0700073, 30.5571, 10.8736, 9.82587, 48.8322, -7.69348, 35.9847, -29.5927, 12.9175, -22.5849, 8.24567, -32.5125, -8.68964, -32.5125, -12.1935, -20.249 )
 
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." index="8"]
+
+stream = ExtResource( 4 )
+volume_db = 0.0
+autoplay = false
+max_distance = 2000.0
+attenuation = 1.0
+bus = "Master"
+area_mask = 1
+_sections_unfolded = [ "Transform", "Z Index" ]
+
+[node name="SoundTimer" type="Timer" parent="AudioStreamPlayer2D" index="0"]
+
+process_mode = 1
+wait_time = 0.7
+one_shot = false
+autostart = false
+
+[node name="AnimationExplode" type="AnimationPlayer" parent="." index="9"]
+
+root_node = NodePath("..")
+autoplay = ""
+playback_process_mode = 1
+playback_default_blend_time = 0.0
+playback_speed = 1.0
+anims/explode = SubResource( 2 )
+blend_times = [  ]
+autoplay = ""
+_sections_unfolded = [ "Playback Options" ]
+
 [connection signal="timeout" from="TimerBulletTimeout" to="." method="_on_Timer_timeout"]
+
+[connection signal="timeout" from="AudioStreamPlayer2D/SoundTimer" to="." method="_on_SoundTimer_timeout"]
 
 

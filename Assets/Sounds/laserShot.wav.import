@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/laserShot.wav-7c9cc725caacf544558bd51be1183cf2.sample"
+
+[deps]
+
+source_file="res://Assets/Sounds/laserShot.wav"
+source_md5="1da52360ffb6ac35b2e354dc32488659"
+
+dest_files=[ "res://.import/laserShot.wav-7c9cc725caacf544558bd51be1183cf2.sample" ]
+dest_md5="993ddc5efd340fa80715579f733bfbe6"
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=true
+edit/normalize=true
+edit/loop=false
+compress/mode=0

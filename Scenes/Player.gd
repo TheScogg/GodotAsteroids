@@ -16,6 +16,8 @@ var lives = 50
 
 var engineSprites = []
 var bullet
+var bulletSound
+var bulletSoundTimer
 onready var bullets = preload("res://Scenes/Bullet.tscn")
 onready var asteroid = preload("res://Scenes/Asteroids.tscn")
 onready var shieldAnimation = get_node("Shield/AnimationShield")
@@ -47,8 +49,16 @@ func _physics_process(delta):
 			bullet = bullets.instance()
 			bullet.position = self.position
 			bullet.rotation = self.rotation
-
 			get_parent().add_child(bullet)
+			
+			bulletSound = get_node("AudioStreamPlayer2D")
+
+			bulletSoundTimer = get_node("AudioStreamPlayer2D/SoundTimer")
+			
+			bulletSound.play()
+			bulletSoundTimer.start()
+			
+
 #			self.add_child(bullet)
 			$TimerBulletTimeout.start()
 		canShoot = false
@@ -134,11 +144,8 @@ func _player_hit():
 	###############################################################################
 
 func _on_Timer_timeout():
-
 	canShoot = true
 	$TimerBulletTimeout.start()
 
-
-
-
-
+func _on_SoundTimer_timeout():
+	bulletSound.stop()

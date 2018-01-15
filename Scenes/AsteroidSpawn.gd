@@ -9,7 +9,7 @@ var asteroid
 #var scn_explosion = preload("res://Scenes/Explosion.tscn")
 var explosion 
 var hits = 0
-var totalAsteroids = 5
+var totalAsteroids = 15
 var asteroidPath2D
 var asteroidFollowPath
 var asteroidDictionary = {}
@@ -66,13 +66,13 @@ func _make_small(asteroidPos):
 	
 #Create asteroid path and Area2d / Sprite subnodes every time TimerAsteroid expires
 func _on_TimerAsteroid_timeout():
-
-	if (totalAsteroids > 0):
-		create("Big", Vector2(0,0), 1)
-		totalAsteroids -= 1
-	else:
-		self.get_node("TimerAsteroid").queue_free()
-	
+	self.get_node("TimerAsteroid").wait_time *= .99
+	print (self.get_node("TimerAsteroid").wait_time)
+	create("Big", Vector2(0,0), 1)
+	totalAsteroids -= 1
+#	else:
+#		self.get_node("TimerAsteroid").queue_free()
+#
 	
 
 
