@@ -11,7 +11,7 @@ var velocity
 var canShoot = true
 var lives = 50
 
-
+var sounds
 
 
 var engineSprites = []
@@ -37,7 +37,7 @@ func _ready():
 	set_physics_process(true)
 	
 	engineSprites = get_tree().get_nodes_in_group("Thrusters")
-
+	sounds = get_tree().get_root().get_node("Main/Sounds")
 
 
 	
@@ -46,8 +46,10 @@ func _physics_process(delta):
 		#Instance bullet scene upon Space Bar press
 	if (Input.is_action_pressed("ui_select")):
 		if (canShoot == true):
+
+			
 			bullet = bullets.instance()
-			bullet.position = self.position
+			bullet.position = self.get_node("Turret").global_position 
 			bullet.rotation = self.rotation
 			get_parent().add_child(bullet)
 			
@@ -86,9 +88,6 @@ func _physics_process(delta):
 
 	#If pressing up, show forward thrusters. Deteriorate if moving backwards, and reverse direction when threshold reached
 	if (Input.is_action_pressed("ui_up")):
-
-
-
 		for i in range(2):
 			engineSprites[i].visible = true
 		if (abs(motion.x) > .04 && abs(motion.y) > .04 && direction == -1):
@@ -96,6 +95,12 @@ func _physics_process(delta):
 		else:
 			direction = 1
 			motion = Vector2(-sin(rotation), cos(rotation)) * SPEED * delta * direction
+		
+	if (Input.is_action_just_pressed("ui_up") || Input.is_action_just_pressed("ui_down")):
+		sounds.get_node("Engine").play()
+		
+	if (Input.is_action_just_released("ui_up") || Input.is_action_just_released("ui_down")):
+		sounds.get_node("Engine").stop()
 		
 	#When braking with down arrow, motion deteriorates
 	if (Input.is_action_pressed("ui_down")):

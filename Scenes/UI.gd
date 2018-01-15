@@ -2,6 +2,7 @@ extends Control
 var livesIcons
 var paused 
 var pauseLabel
+var scoreLabel
 # class member variables go here, for example:
 # var a = 2
 # var b = "textvar"
@@ -10,8 +11,10 @@ func _ready():
 	# Called every time the node is added to the scene.
 	# Initialization here
 	makeLivesArray()
+	scoreLabel = get_node("ScoreLabel")
 	pauseLabel = get_node("PauseLabel")
 	paused = false
+
 	
 	set_physics_process(true)
 
@@ -23,6 +26,8 @@ func playSound(sound):
 	soundRoot.play()
 
 func _physics_process(delta):
+	
+	scoreLabel.set_text(String(global.score))
 
 	if (Input.is_action_just_pressed("ui_pause")):
 		playSound("Pause")
@@ -34,7 +39,7 @@ func _physics_process(delta):
 			get_tree().set_pause(false)
 			pauseLabel.visible = false
 		
-
+	
 
 	
 func makeLivesArray():

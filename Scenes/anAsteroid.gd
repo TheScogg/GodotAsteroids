@@ -133,7 +133,7 @@ func playSound(sound):
 func _body_entered( body ):
 	if (body.get_name().find("Bullet") != -1):
 		hits += 1
-
+		global.score += 25
 
 
 		var bulletHit = bullet.instance()
@@ -146,18 +146,21 @@ func _body_entered( body ):
 
 		if (self.get_name().find("Big") != -1 && hits == 5):
 			# Spawn 2 medium asteroids after destroying large asteroid, find and play explosion animation
+			global.score += 50
 			emit_signal("makeMedium", self.global_position)
 			explosion.position = self.global_position
 			explosion.get_node("AnimationExplosion").play("explode")
 			playSound("Explosion")
 			self.queue_free()
 		elif (self.get_name().find("Medium") != -1 && hits == 5):
+			global.score += 25
 			emit_signal("makeSmall", self.global_position)
 			explosion.position = self.global_position
 			explosion.get_node("AnimationExplosion").play("explodeMedium")
 			playSound("Explosion")
 			self.queue_free()
 		elif (self.get_name().find("Small") != -1 && hits == 5):
+			global.score += 10
 			explosion.position = self.global_position
 			explosion.get_node("AnimationExplosion").play("explodeSmall")
 			playSound("Explosion")

@@ -16,6 +16,8 @@ signal killed
 var ui
 var screensize 
 var playerKilledTimer
+onready var opacityTween
+var sounds
 
 func _ready():
 	screensize = get_viewport().get_visible_rect().size
@@ -33,8 +35,9 @@ func connect_signals():
 	self.connect("killed", ui, "_on_killed")
 	####
 	Player = get_node("Player")
-
-
+	opacityTween = Player.get_node("opacityTween")
+	sounds = get_tree().get_root().get_node("Main/Sounds")
+	print (sounds)
 	
 		
 func gameOver():
@@ -42,10 +45,13 @@ func gameOver():
 
 
 func _on_player_killed_timeout():
-	Player.get_node("SpriteShip").set_texture(load("res://Assets/Space shooter assets (300 assets)/PNG/playerShip2_red.png"))
+
+	Player.get_node("SpriteShip").set_texture(load("res://Assets/AssetForge/Ship1.png"))
 	Player.get_node("AnimationExplode").stop(true)
-	print(Player.get_node("AnimationExplode").is_playing())
 	Player.position = screensize/2
+	Player.motion = Vector2(0,0)
+	sounds.get_node("Womp").play()
+	opacityTween.start()
 	Player.get_node("CollisionPolygon2D").disabled = false
 	playerKilledTimer.stop()
 
@@ -55,11 +61,16 @@ func playerKilled():
 	playerKilledTimer = Timer.new()
 	self.add_child(playerKilledTimer)
 	playerKilledTimer.wait_time = 2
+	opacityTween.interpolate_property(Player.get_node("SpriteShip"), "modulate", Color(1,1,1,0), Color(1,1,1,1), 3.0, Tween.TRANS_LINEAR, Tween.EASE_IN)
+
 	playerKilledTimer.connect("timeout",self,"_on_player_killed_timeout")
 	playerKilledTimer.start()
-	
+
+
 	Player.get_node("AnimationExplode").play("explode")
 	Player.get_node("CollisionPolygon2D").disabled = true
+
+	sounds.get_node("Explosion").play()
 
 	lives -= 1
 	emit_signal("killed")

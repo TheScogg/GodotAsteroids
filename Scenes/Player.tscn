@@ -1,12 +1,13 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Scenes/Player.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Space shooter assets (300 assets)/PNG/Effects/fire13.png" type="Texture" id=2]
-[ext_resource path="res://Assets/Space shooter assets (300 assets)/PNG/playerShip2_red.png" type="Texture" id=3]
+[ext_resource path="res://Assets/AssetForge/Ship1.png" type="Texture" id=3]
 [ext_resource path="res://Assets/Sounds/laserShot.wav" type="AudioStream" id=4]
-[ext_resource path="res://Assets/Space shooter assets (300 assets)/PNG/Damage/playerShip1_damage1.png" type="Texture" id=5]
-[ext_resource path="res://Assets/Space shooter assets (300 assets)/PNG/Damage/playerShip1_damage2.png" type="Texture" id=6]
-[ext_resource path="res://Assets/Space shooter assets (300 assets)/PNG/Damage/playerShip1_damage3.png" type="Texture" id=7]
+[ext_resource path="res://Assets/Space shooter assets (300 assets)/PNG/playerShip2_red.png" type="Texture" id=5]
+[ext_resource path="res://Assets/Space shooter assets (300 assets)/PNG/Damage/playerShip1_damage1.png" type="Texture" id=6]
+[ext_resource path="res://Assets/Space shooter assets (300 assets)/PNG/Damage/playerShip1_damage2.png" type="Texture" id=7]
+[ext_resource path="res://Assets/Space shooter assets (300 assets)/PNG/Damage/playerShip1_damage3.png" type="Texture" id=8]
 
 [sub_resource type="ShaderMaterial" id=1]
 
@@ -25,13 +26,13 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"times": PoolRealArray( 0, 0.00723003, 0.2, 0.4, 0.6, 0.8 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
 "update": 1,
-"values": [ ExtResource( 3 ), ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ), null ]
+"values": [ ExtResource( 5 ), ExtResource( 3 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ), null ]
 }
 
-[node name="Player" type="KinematicBody2D" index="0"]
+[node name="Player" type="KinematicBody2D"]
 
 position = Vector2( 956.92, 579.506 )
 input_pickable = false
@@ -72,9 +73,7 @@ autoplay = ""
 "Thrusters",
 ]]
 
-visible = false
-position = Vector2( 27.4378, -45.8394 )
-rotation = -0.244346
+position = Vector2( 17.4378, -43.8394 )
 texture = ExtResource( 2 )
 flip_h = true
 _sections_unfolded = [ "Animation", "Offset", "Transform", "Visibility" ]
@@ -83,10 +82,8 @@ _sections_unfolded = [ "Animation", "Offset", "Transform", "Visibility" ]
 "Thrusters",
 ]]
 
-visible = false
 material = SubResource( 1 )
-position = Vector2( -26.9326, -45.1401 )
-rotation = 0.244346
+position = Vector2( -19.9326, -45.1401 )
 texture = ExtResource( 2 )
 _sections_unfolded = [ "Animation", "Material", "Offset", "Transform", "Visibility", "Z" ]
 
@@ -94,21 +91,19 @@ _sections_unfolded = [ "Animation", "Material", "Offset", "Transform", "Visibili
 "Thrusters",
 ]]
 
-position = Vector2( 53.8155, 3.27927 )
-rotation = -0.244346
+position = Vector2( 16.8155, 3.27927 )
 scale = Vector2( 1, 0.5 )
 texture = ExtResource( 2 )
 flip_h = true
 flip_v = true
-_sections_unfolded = [ "Animation", "Offset", "Transform", "Visibility" ]
+_sections_unfolded = [ "Animation", "Offset", "Transform", "Visibility", "Z Index" ]
 
 [node name="SpriteThrusterRR" type="Sprite" parent="." index="4" groups=[
 "Thrusters",
 ]]
 
 material = SubResource( 1 )
-position = Vector2( -52.555, 3.97851 )
-rotation = 0.244346
+position = Vector2( -18.555, 3.97852 )
 scale = Vector2( 1, 0.5 )
 texture = ExtResource( 2 )
 flip_v = true
@@ -116,9 +111,8 @@ _sections_unfolded = [ "Animation", "Material", "Offset", "Transform", "Visibili
 
 [node name="SpriteShip" type="Sprite" parent="." index="5"]
 
-rotation = 3.14159
 texture = ExtResource( 3 )
-_sections_unfolded = [ "Animation", "Transform", "Z" ]
+_sections_unfolded = [ "Animation", "Material", "Offset", "Transform", "Visibility", "Z" ]
 
 [node name="TimerBulletTimeout" type="Timer" parent="." index="6"]
 
@@ -163,6 +157,28 @@ anims/explode = SubResource( 2 )
 blend_times = [  ]
 autoplay = ""
 _sections_unfolded = [ "Playback Options" ]
+
+[node name="Turret" type="Area2D" parent="." index="10"]
+
+position = Vector2( -0.682373, 61.0933 )
+scale = Vector2( 0.0763779, 0.0885935 )
+input_pickable = true
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+audio_bus_override = false
+audio_bus_name = "Master"
+
+[node name="opacityTween" type="Tween" parent="." index="11"]
+
+repeat = false
+playback_process_mode = 1
+playback_speed = 1.0
+playback/active = false
+playback/repeat = false
+playback/speed = 1.0
+_sections_unfolded = [ "playback" ]
 
 [connection signal="timeout" from="TimerBulletTimeout" to="." method="_on_Timer_timeout"]
 

@@ -1,8 +1,10 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Assets/Sounds/explosion.wav" type="AudioStream" id=1]
 [ext_resource path="res://Assets/Sounds/pause.wav" type="AudioStream" id=2]
 [ext_resource path="res://Assets/Sounds/metalScraping.wav" type="AudioStream" id=3]
+[ext_resource path="res://Assets/Sounds/womp.wav" type="AudioStream" id=4]
+[ext_resource path="res://Assets/Sounds/engine.wav" type="AudioStream" id=5]
 
 [node name="Sounds" type="Node2D"]
 
@@ -40,5 +42,25 @@ attenuation = 1.0
 bus = "Master"
 area_mask = 1
 _sections_unfolded = [ "Material", "Visibility" ]
+
+[node name="Womp" type="AudioStreamPlayer2D" parent="." index="3"]
+
+stream = ExtResource( 4 )
+volume_db = 0.0
+autoplay = false
+max_distance = 2000.0
+attenuation = 1.0
+bus = "Master"
+area_mask = 1
+
+[node name="Engine" type="AudioStreamPlayer2D" parent="." index="4"]
+
+stream = ExtResource( 5 )
+volume_db = 0.0
+autoplay = false
+max_distance = 2000.0
+attenuation = 1.0
+bus = "Master"
+area_mask = 1
 
 

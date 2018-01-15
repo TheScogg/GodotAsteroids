@@ -1,0 +1,23 @@
+# Made using Asset Forge (1.3)
+
+:models
+#ShipParts/Bridge03[(0, 0, 0);(0.0, 0.0, 0.0);(1.0, 1.0, 1.0);Bridge03_0;customMaterial4+customMaterial6+blueSteel]
+#ShipParts/Cabin13[(-9.69E-08, 0.8, 0.6);(0.0, 0.0, 0.0);(0.6, 1.0, 1.0);Cabin13_3;_defaultMat+glass]
+#ShipParts/Cabin13[(-9.69E-08, 0.8, 1.15);(0.0, 180.0, 0.0);(0.6, 1.0, 0.2);Cabin13_4;black+glass]
+#ShipParts/Bridge01[(4.47E-08, 0.4, 0.9);(0.0, 0.0, 0.0);(1.0, 1.0, 1.0);Bridge01_7;customMaterial4+customMaterial4+blueSteel]
+#ShipParts/Bridge01[(4.47E-08, 0.4, 0.9);(0.0, 0.0, 0.0);(-1.0, 1.0, 1.0);Bridge01_8;customMaterial4+customMaterial4+blueSteel]
+#ShipParts/Engine04[(0, 0.5, -0.15);(0.0, 0.0, 0.0);(1.0, 1.0, 1.3);Engine04_9;engine+black+_defaultMat+blueSteel]
+#ShipParts/Pylon01[(5.96E-08, 0.7, -0.6);(0.0, 270.0, 90.0);(1.0, 1.0, 1.0);Pylon01_10;_defaultMat+black+blueSteel]
+
+:materials
+_defaultMat[RGBA(0.000, 0.000, 0.000, 1.000);logs]
+black[RGBA(0.440, 0.310, 0.005, 1.000);wallOld]
+blueSteel[RGBA(0.440, 0.000, 0.000, 1.000);wallOld]
+glass[RGBA(0.000, 0.081, 0.290, 1.000);simpleWaves]
+engine[RGBA(0.459, 1.000, 0.855, 1.000);]
+customMaterial4[RGBA(0.000, 0.000, 0.000, 1.000);panels]
+customMaterial6[RGBA(0.170, 0.128, 0.000, 1.000);wallOld]
+
+:textures
+
+:extra

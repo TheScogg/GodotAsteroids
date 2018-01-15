@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/womp.wav-e8ce7c87a10a556d8aba1b64e4ee60c4.sample"
+
+[deps]
+
+source_file="res://Assets/Sounds/womp.wav"
+source_md5="0fb11c8ca59b7f6776dbe192fb47fb51"
+
+dest_files=[ "res://.import/womp.wav-e8ce7c87a10a556d8aba1b64e4ee60c4.sample" ]
+dest_md5="51c2c49f8d245ff4c200415ccf22d176"
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=true
+edit/normalize=true
+edit/loop=false
+compress/mode=0
