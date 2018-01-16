@@ -9,7 +9,7 @@
 [ext_resource path="res://Assets/Space shooter assets (300 assets)/PNG/Meteors/meteorGrey_tiny1.png" type="Texture" id=7]
 [ext_resource path="res://Assets/Space shooter assets (300 assets)/PNG/Meteors/meteorGrey_tiny2.png" type="Texture" id=8]
 
-[node name="Asteroids" type="Node2D" index="0"]
+[node name="Asteroids" type="Node2D"]
 
 script = ExtResource( 1 )
 _sections_unfolded = [ "Z" ]
@@ -21,7 +21,6 @@ gravity_vec = Vector2( 0, 1 )
 gravity = 98.0
 linear_damp = 0.1
 angular_damp = 1.0
-priority = 4.0
 audio_bus_override = false
 audio_bus_name = "Master"
 _sections_unfolded = [ "Transform" ]
@@ -46,7 +45,6 @@ gravity_vec = Vector2( 0, 1 )
 gravity = 98.0
 linear_damp = 0.1
 angular_damp = 1.0
-priority = 4.0
 audio_bus_override = false
 audio_bus_name = "Master"
 _sections_unfolded = [ "Transform" ]
@@ -71,7 +69,6 @@ gravity_vec = Vector2( 0, 1 )
 gravity = 98.0
 linear_damp = 0.1
 angular_damp = 1.0
-priority = 4.0
 audio_bus_override = false
 audio_bus_name = "Master"
 _sections_unfolded = [ "Transform" ]

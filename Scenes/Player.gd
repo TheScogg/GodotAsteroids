@@ -4,7 +4,10 @@ var screensize
 var motion
 var prevMotion
 export var SPEED = 400
-export var DETERIORATION = -.05
+
+#Going to use TWEEN to alter this value upon contact with asteroid to simulate bouncing
+export var DETERIORATION = 1
+
 var rotateBoost
 var direction
 var velocity
@@ -27,13 +30,13 @@ func _ready():
 	#/root/Main/AsteroidSpawn/Path2D/@AsteroidPath@3/Big3
 
 
-	print (shieldAnimation)
+
 	screensize = get_viewport().get_visible_rect().size
 	position = screensize / 2
 	motion = Vector2(0,0)
 
 	#Forward is 1, Backwards is -1
-	direction = 1
+	direction = 0
 	set_physics_process(true)
 	
 	engineSprites = get_tree().get_nodes_in_group("Thrusters")
@@ -42,7 +45,8 @@ func _ready():
 
 	
 func _physics_process(delta):
-
+	if DETERIORATION == 0:
+		DETERIORATION = 1
 		#Instance bullet scene upon Space Bar press
 	if (Input.is_action_pressed("ui_select")):
 		if (canShoot == true):
@@ -86,6 +90,7 @@ func _physics_process(delta):
 			engineSprites[i].visible = false
 		motion = motion * .98
 
+
 	#If pressing up, show forward thrusters. Deteriorate if moving backwards, and reverse direction when threshold reached
 	if (Input.is_action_pressed("ui_up")):
 		for i in range(2):
@@ -104,6 +109,7 @@ func _physics_process(delta):
 		
 	#When braking with down arrow, motion deteriorates
 	if (Input.is_action_pressed("ui_down")):
+
 		for i in range(2):
 			engineSprites[i+2].visible = true
 		if (abs(motion.x) > .04 && abs(motion.y) > .04 && direction == 1):
@@ -111,9 +117,10 @@ func _physics_process(delta):
 		else:
 			direction = -1
 			motion = Vector2(-sin(rotation), cos(rotation)) * SPEED * delta * direction
-	
-	if (direction == -1 && !Input.is_action_pressed("ui_down")):
-		direction = 1
+
+		
+#	if (direction == -1 && !Input.is_action_pressed("ui_down")):
+#		direction = 1
 		
 	if (Input.is_action_pressed("ui_right")):
 		self.rotate(delta * rotateBoost * direction)
@@ -131,20 +138,22 @@ func _physics_process(delta):
 	if (position.x >= screensize.x):
 		position.x = 0
 
-	position = position + motion
+
+	position = position + motion * DETERIORATION 
 
 
 
 
-func _player_hit():
-	lives -= 1
-	print (lives)
+#func _player_hit():
+#	lives -= 1
+#	print (lives)
+#	motion = motion * -1
+
+
+
 	
-
-
-
-	
-
+func _input(event):
+	pass
 
 	###############################################################################
 

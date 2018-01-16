@@ -49,7 +49,7 @@ _sections_unfolded = [ "Extra Spacing", "Font", "Settings" ]
 script = ExtResource( 1 )
 _sections_unfolded = [ "Visibility", "Z" ]
 lives = 3
-damageMultiplier = 40
+damageMultiplier = 5
 
 [node name="spacebg_01" type="Sprite" parent="." index="0"]
 

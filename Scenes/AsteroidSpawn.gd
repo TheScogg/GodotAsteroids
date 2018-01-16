@@ -67,7 +67,7 @@ func _make_small(asteroidPos):
 #Create asteroid path and Area2d / Sprite subnodes every time TimerAsteroid expires
 func _on_TimerAsteroid_timeout():
 	self.get_node("TimerAsteroid").wait_time *= .99
-	print (self.get_node("TimerAsteroid").wait_time)
+
 	create("Big", Vector2(0,0), 1)
 	totalAsteroids -= 1
 #	else:

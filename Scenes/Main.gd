@@ -10,12 +10,13 @@ var Player
 var damageDict = {}
 export (int) var lives = 3
 var damage
-export (int) var damageMultiplier = 40
+export (int) var damageMultiplier = 5
 
 signal killed
 var ui
 var screensize 
 var playerKilledTimer
+onready var impactTween
 onready var opacityTween
 var sounds
 
@@ -35,6 +36,7 @@ func connect_signals():
 	self.connect("killed", ui, "_on_killed")
 	####
 	Player = get_node("Player")
+	impactTween = Player.get_node("impactTween")
 	opacityTween = Player.get_node("opacityTween")
 	sounds = get_tree().get_root().get_node("Main/Sounds")
 	print (sounds)
@@ -66,6 +68,7 @@ func playerKilled():
 	playerKilledTimer.connect("timeout",self,"_on_player_killed_timeout")
 	playerKilledTimer.start()
 
+	
 
 	Player.get_node("AnimationExplode").play("explode")
 	Player.get_node("CollisionPolygon2D").disabled = true
@@ -89,8 +92,10 @@ func _player_hit(size):
 		damage = .5
 	if (size == "Small"):
 		damage = .25
-
 	health -= damage * damageMultiplier
-	print (health)	
+	
+	opacityTween.interpolate_property(Player, "DETERIORATION", -Player.direction, Player.direction, 2.0, Tween.TRANS_LINEAR, Tween.EASE_IN)
+	opacityTween.start()
+#	Player.motion *= -1
 	if (health <= 0):
 		playerKilled()

@@ -42,7 +42,7 @@ collision/safe_margin = 0.08
 script = ExtResource( 1 )
 _sections_unfolded = [ "Collision", "Material", "Pause", "Pickable", "Transform", "Visibility", "Z", "Z Index", "collision" ]
 SPEED = 400
-DETERIORATION = -0.05
+DETERIORATION = 1
 
 [node name="Shield" type="Area2D" parent="." index="0"]
 
@@ -170,7 +170,16 @@ angular_damp = 1.0
 audio_bus_override = false
 audio_bus_name = "Master"
 
-[node name="opacityTween" type="Tween" parent="." index="11"]
+[node name="impactTween" type="Tween" parent="." index="11"]
+
+repeat = false
+playback_process_mode = 1
+playback_speed = 1.0
+playback/active = false
+playback/repeat = false
+playback/speed = 1.0
+
+[node name="opacityTween" type="Tween" parent="." index="12"]
 
 repeat = false
 playback_process_mode = 1
@@ -179,6 +188,13 @@ playback/active = false
 playback/repeat = false
 playback/speed = 1.0
 _sections_unfolded = [ "playback" ]
+
+[node name="impactTimer" type="Timer" parent="." index="13"]
+
+process_mode = 1
+wait_time = 1.0
+one_shot = false
+autostart = false
 
 [connection signal="timeout" from="TimerBulletTimeout" to="." method="_on_Timer_timeout"]
 

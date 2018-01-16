@@ -98,7 +98,7 @@ func move_asteroids(delta):
 		self.position += vectorHeading
 		self.rotation += 1.5 * delta
 	
-
+	print (self.global_position)
 
 func set_pos_and_trajectory():
 	randomize()
@@ -124,9 +124,9 @@ func set_pos_and_trajectory():
 
 func playSound(sound):
 	var soundLocation = ("Main/Sounds/" + sound)
-	print (soundLocation)
+
 	var soundRoot = get_tree().get_root().get_node(soundLocation)
-	print (soundRoot)
+
 	soundRoot.play()
 
 		
